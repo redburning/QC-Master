@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3917048 */
+  src: url('iconfont.woff2?t=1685259641433') format('woff2'),
+       url('iconfont.woff?t=1685259641433') format('woff'),
+       url('iconfont.ttf?t=1685259641433') format('truetype'),
+       url('iconfont.svg?t=1685259641433#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-folder-open:before {
+  content: "\e7d1";
+}
+
+.icon-download:before {
+  content: "\e7ef";
+}
+
+.icon-plus:before {
+  content: "\e67d";
+}
+
+.icon-tv:before {
+  content: "\e8b0";
+}
+
+.icon-view:before {
+  content: "\ed52";
+}
+
+.icon-Basic_Transform:before {
+  content: "\e73d";
+}
+
+.icon-stopcircle:before {
+  content: "\e80e";
+}
+
+.icon-back:before {
+  content: "\e6a9";
+}
+
+.icon-edit:before {
+  content: "\e6ae";
+}
+
+.icon-play:before {
+  content: "\e62f";
+}
+
+.icon-setting:before {
+  content: "\e666";
+}
+
+.icon-folder-open-fill:before {
+  content: "\e85e";
+}
+
