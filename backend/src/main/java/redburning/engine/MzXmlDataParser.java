@@ -52,7 +52,7 @@ public class MzXmlDataParser {
 	
 	private SseEmitter emitter;
 	
-	private List<String> sampleList = new ArrayList<>();
+	private List<String> sampleList = new ArrayList<>();;
 	
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
@@ -64,6 +64,10 @@ public class MzXmlDataParser {
 	
 	public void setEmitter(SseEmitter emitter) {
 		this.emitter = emitter;
+	}
+	
+	public void setSampleList(List<String> sampleList) {
+		// TODO: 从磁盘加载时sampleList可能缺失
 	}
 	
 	public void parseSampleName(String filePath) {

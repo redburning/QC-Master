@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -60,7 +60,7 @@ public class RawDataProcessor implements FileObserver {
 		boolean isNewFile = true;
 		MonitorFilesEntity monitorFilesEntity = monitorFilesService.getEntity(taskId);
 		if (monitorFilesEntity != null) {
-			Set<String> monitorFileSet = new HashSet<>(monitorFilesEntity.getFiles());
+			Set<String> monitorFileSet = new LinkedHashSet<>(monitorFilesEntity.getFiles());
 			String absolutePath = rawDataPath.toAbsolutePath().toString();
 			if (!monitorFileSet.contains(absolutePath)) {
 				monitorFileSet.add(absolutePath);

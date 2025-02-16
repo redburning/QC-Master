@@ -74,6 +74,10 @@ public class TaskController {
 			projectService.saveOrUpdateProject(project);
 			// 恢复任务
 			SseEmitter emitter = taskContext.getSseEmitter(id);
+			if (emitter == null) {
+				emitter = new SseEmitter(Long.MAX_VALUE);
+				taskContext.saveSseEmitter(id, emitter);
+			}
 			taskService.createTask(id, taskDTO, emitter);
 			return Result.success();
 		} catch (Exception e) {

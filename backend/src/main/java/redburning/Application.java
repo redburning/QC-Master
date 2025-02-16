@@ -39,23 +39,27 @@ public class Application implements ApplicationListener<ServletWebServerInitiali
         String url = "http://127.0.0.1:" + port;
         try {
 			openBrowse(url);
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			log.warn("can not open browser", e);
 			e.printStackTrace();
 		}
 	}
 	
-	private static void openBrowse(String url) throws IOException {
+	private static void openBrowse(String url) throws IOException, InterruptedException {
 		String os = System.getProperty("os.name").toLowerCase();
+		Process process = null;
         if (os.contains("win")) {
             // Windows 系统
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+            process = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
         } else if (os.contains("mac")) {
             // Mac OS 系统
-            Runtime.getRuntime().exec("open " + url);
+            process = Runtime.getRuntime().exec("open " + url);
         } else if (os.contains("nix") || os.contains("nux")) {
             // Linux 系统
-            Runtime.getRuntime().exec("xdg-open " + url);
+            process = Runtime.getRuntime().exec("xdg-open " + url);
+        }
+        if (process!= null) {
+            Thread.sleep(2000);
         }
     }
 }

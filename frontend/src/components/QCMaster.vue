@@ -11,7 +11,7 @@
               <svg t="1694444178129" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13049" width="12" height="12">
                 <path d="M567.168 115.498667l34.901333 34.901333L141.568 610.901333C105.301333 647.168 85.333333 695.381333 85.333333 746.666667s19.968 99.498667 56.234667 135.808C177.877333 918.698667 226.090667 938.666667 277.333333 938.666667s99.456-19.968 135.765334-56.234667L873.6 421.930667l34.901333 34.901333 60.330667-60.330667-341.333333-341.333333-60.330667 60.330667z m135.765333 356.437333l-102.528-102.570667-60.330666 60.330667 102.528 102.570667-60.330667 60.373333-42.24-42.24-60.330667 60.330667 42.24 42.24-60.373333 60.373333-102.528-102.570667L298.666667 671.061333l102.528 102.570667-48.469334 48.469333c-40.32 40.277333-110.506667 40.277333-150.826666 0C181.76 801.92 170.666667 775.168 170.666667 746.666667s11.093333-55.253333 31.232-75.434667L662.4 210.730667l150.826667 150.826666-110.293334 110.378667z" p-id="13050" fill="white"></path>
               </svg>
-              {{ index + ': ' + sample }}
+              {{ index + 1 + ': ' + sample }}
             </el-button>
           </li>
         </ul>
@@ -36,7 +36,7 @@
           </el-tooltip>
 
           <el-tooltip class="item" effect="dark" content="Save project" placement="bottom">
-            <el-button size="small" @click="saveProjectDialogVisible = true" class="toolbar-button" style="margin-left:0px; display:flex; align-items: center;">
+            <el-button size="small" @click="saveProjectDialogVisible = true" class="toolbar-button" :disabled="monitorTask.taskId === null" style="margin-left:0px; display:flex; align-items: center;">
               <span>
                 <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" width="18" height="18" class="css-sr6nr"><path d="M20.71,9.29l-6-6a1,1,0,0,0-.32-.21A1.09,1.09,0,0,0,14,3H6A3,3,0,0,0,3,6V18a3,3,0,0,0,3,3H18a3,3,0,0,0,3-3V10A1,1,0,0,0,20.71,9.29ZM9,5h4V7H9Zm6,14H9V16a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1Zm4-1a1,1,0,0,1-1,1H17V16a3,3,0,0,0-3-3H10a3,3,0,0,0-3,3v3H6a1,1,0,0,1-1-1V6A1,1,0,0,1,6,5H7V8A1,1,0,0,0,8,9h6a1,1,0,0,0,1-1V6.41l4,4Z"></path></svg>
               </span>
@@ -894,7 +894,7 @@
               <template slot-scope="scope">
                 <div style="display: flex;">
                   <el-tooltip class="item" effect="dark" content="Open project" placement="bottom">
-                    <el-button type="primary" size="mini" @click="openProject(scope.row.id)" style="display: flex; align-items: center; padding: 2px 6px;">
+                    <el-button type="primary" size="mini" @click="loadProject(scope.row.id)" style="display: flex; align-items: center; padding: 2px 6px;">
                       <svg t="1739331978219" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10781" width="18" height="18"><path d="M1000.106667 375.466667l-129.706667-167.253334c-3.413333-3.413333-6.826667-6.826667-10.24-6.826666L515.413333 160.426667H512h-3.413333L160.426667 201.386667c-3.413333 0-6.826667 3.413333-10.24 6.826666L20.48 372.053333c-3.413333 6.826667-3.413333 13.653333 0 20.48 3.413333 6.826667 10.24 10.24 13.653333 10.24h3.413334l348.16-40.96c3.413333 0 10.24-3.413333 10.24-6.826666L512 204.8l116.053333 153.6c3.413333 3.413333 6.826667 6.826667 10.24 6.826667L986.453333 409.6h3.413334c10.24 0 17.066667-6.826667 17.066666-17.066667 0-6.826667-3.413333-13.653333-6.826666-17.066666z" fill="#ffffff" p-id="10782"></path><path d="M484.693333 314.026667c-6.826667-3.413333-13.653333 0-20.48 6.826666L419.84 375.466667c-6.826667 10.24-20.48 17.066667-34.133333 20.48l-218.453334 27.306666c-10.24 0-13.653333 6.826667-13.653333 17.066667v293.546667c0 6.826667 3.413333 13.653333 10.24 17.066666l307.2 116.053334h6.826667c3.413333 0 6.826667 0 10.24-3.413334 3.413333-3.413333 6.826667-6.826667 6.826666-13.653333V327.68c0-6.826667-3.413333-13.653333-10.24-13.653333z m-30.72 351.573333c-3.413333 3.413333-6.826667 3.413333-13.653333 3.413333s-10.24 0-13.653333-3.413333l-37.546667-37.546667v95.573334c0 10.24-6.826667 17.066667-17.066667 17.066666s-17.066667-6.826667-17.066666-17.066666v-95.573334l-37.546667 37.546667c-6.826667 6.826667-17.066667 6.826667-23.893333 0s-6.826667-17.066667 0-23.893333l68.266666-68.266667s3.413333-3.413333 6.826667-3.413333c3.413333-3.413333 10.24-3.413333 13.653333 0 3.413333 0 3.413333 3.413333 6.826667 3.413333l68.266667 68.266667c3.413333 6.826667 3.413333 17.066667-3.413334 23.893333zM856.746667 426.666667l-218.453334-27.306667c-13.653333 0-27.306667-10.24-34.133333-20.48l-40.96-54.613333c-3.413333-6.826667-13.653333-6.826667-20.48-6.826667-6.826667 3.413333-10.24 10.24-10.24 17.066667v512c0 6.826667 3.413333 10.24 6.826667 13.653333 3.413333 3.413333 6.826667 3.413333 10.24 3.413333h6.826666l307.2-109.226666c6.826667-3.413333 10.24-10.24 10.24-17.066667V443.733333c-3.413333-10.24-10.24-17.066667-17.066666-17.066666z m-119.466667 279.893333l-119.466667 34.133333H614.4c-6.826667 0-13.653333-3.413333-17.066667-13.653333-3.413333-10.24 3.413333-17.066667 10.24-20.48l119.466667-34.133333c10.24-3.413333 17.066667 3.413333 20.48 10.24 3.413333 10.24 0 20.48-10.24 23.893333z" fill="#ffffff" p-id="10783"></path></svg>
                     </el-button>
                   </el-tooltip>
@@ -945,11 +945,11 @@ export default {
       monitorTask: {
         taskId: null,
         monitorPath: '',
-        monitorFiles: [],
         monitorSamples: [],
         monitoring: false,
         serialNumber: 0
       },
+      eventSource: null,
       // 隐藏侧边栏
       viewMode: 'default',
       router: { path: 'overview', type: '' },
@@ -1398,7 +1398,10 @@ export default {
           url: API_BASE + `/task/resume/${self.monitorTask.taskId}`,
           data: queryBody
         }).then(successResp => {
-          self.monitorTask.monitoring = true
+          if (successResp.data.code === 200) {
+            self.monitorTask.monitoring = true
+            self.fetchData()
+          }
         }).catch(failResp => {
           console.log(failResp)
         })
@@ -1434,15 +1437,20 @@ export default {
     fetchData () {
       var self = this
       // 创建 EventSource 对象，连接到服务器端点
-      const eventSource = new EventSource(API_BASE + `/task/data/${this.monitorTask.taskId}`)
+      if (this.eventSource === null) {
+        this.eventSource = new EventSource(API_BASE + `/task/data/${this.monitorTask.taskId}`)
+      } else {
+        this.eventSource.close()
+        this.eventSource = new EventSource(API_BASE + `/task/data/${this.monitorTask.taskId}`)
+      }
 
       // 监听update-sample更新事件
-      eventSource.addEventListener('update-sample', function (event) {
+      this.eventSource.addEventListener('update-sample', function (event) {
         self.monitorTask.monitorSamples.push(event.data)
       })
 
       // 监听update-bpc更新事件
-      eventSource.addEventListener('update-bpc', function (event) {
+      this.eventSource.addEventListener('update-bpc', function (event) {
         const val = JSON.parse(event.data)
         let bpcTrace = {
           name: val.sample,
@@ -1456,7 +1464,7 @@ export default {
       })
 
       // 监听update-tic更新事件
-      eventSource.addEventListener('update-tic', function (event) {
+      this.eventSource.addEventListener('update-tic', function (event) {
         const val = JSON.parse(event.data)
         let ticTrace = {
           name: val.sample,
@@ -1469,130 +1477,174 @@ export default {
       })
 
       // 监听update-eic更新事件
-      eventSource.addEventListener('update-eic', function (event) {
+      this.eventSource.addEventListener('update-eic', function (event) {
         const val = JSON.parse(event.data)
-        self.extractIonCurrentData = []
-        for (let i = 0; i < val.length; i++) {
-          let extractIonCurrentTrace = {
-            name: val[i].landmark,
-            x: val[i].rt,
-            y: val[i].intensity,
-            mode: 'lines',
-            line: { width: 1 },
-            marker: { size: 1 },
-            connectgaps: false
-          }
-          self.extractIonCurrentData.push(extractIonCurrentTrace)
-        }
-        self.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+        self.renderExtractIonCurrentPanel(val)
       })
 
       // 监听update-landmark-data事件
-      eventSource.addEventListener('update-landmark-data', function (event) {
+      this.eventSource.addEventListener('update-landmark-data', function (event) {
         const val = JSON.parse(event.data)
-
-        self.landmarkRtData = []
-        for (let i = 0; i < val.length; i++) {
-          let option = self.panelOptions.landmarkRt
-          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
-          let trace = {
-            name: val[i].landmark,
-            mode: 'lines+markers',
-            x: val[i].index,
-            y: val[i].rt,
-            line: { width: option.lineWidth },
-            marker: { symbol: symbol, size: size, color: color },
-            text: val[i].sample,
-            sampleName: val[i].sample,
-            hovertemplate: 'sample: %{text}<br>value: %{y}'
-          }
-          self.landmarkRtData.push(trace)
-        }
-
-        self.landmarkIntensityData = []
-        for (let i = 0; i < val.length; i++) {
-          let option = self.panelOptions.landmarkIntensity
-          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
-          let trace = {
-            name: val[i].landmark,
-            mode: 'lines+markers',
-            x: val[i].index,
-            y: val[i].intensity,
-            line: { width: option.lineWidth },
-            marker: { symbol: symbol, size: size, color: color },
-            text: val[i].sample,
-            sampleName: val[i].sample,
-            hovertemplate: 'sample: %{text}<br>value: %{y}'
-          }
-          self.landmarkIntensityData.push(trace)
-        }
-
-        self.landmarkRelMzErrorData = []
-        for (let i = 0; i < val.length; i++) {
-          let option = self.panelOptions.landmarkRelMzError
-          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
-          let trace = {
-            name: val[i].landmark,
-            mode: 'lines+markers',
-            x: val[i].index,
-            y: val[i].relMzError,
-            line: { width: option.lineWidth },
-            marker: { symbol: symbol, size: size, color: color },
-            text: val[i].sample,
-            sampleName: val[i].sample,
-            hovertemplate: 'sample: %{text}<br>value: %{y}'
-          }
-          self.landmarkRelMzErrorData.push(trace)
-        }
-
-        self.landmarkAbsMzErrorData = []
-        for (let i = 0; i < val.length; i++) {
-          let option = self.panelOptions.landmarkAbsMzError
-          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
-          let trace = {
-            name: val[i].landmark,
-            mode: 'lines+markers',
-            x: val[i].index,
-            y: val[i].absMzError,
-            line: { width: option.lineWidth },
-            marker: { symbol: symbol, size: size, color: color },
-            text: val[i].sample,
-            sampleName: val[i].sample,
-            hovertemplate: 'sample: %{text}<br>value: %{y}'
-          }
-          self.landmarkAbsMzErrorData.push(trace)
-        }
-
-        self.landmarkPeakAreaData = []
-        for (let i = 0; i < val.length; i++) {
-          let option = self.panelOptions.landmarkPeakArea
-          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
-          let trace = {
-            name: val[i].landmark,
-            mode: 'lines+markers',
-            x: val[i].index,
-            y: val[i].peakArea,
-            line: { width: option.lineWidth },
-            marker: { symbol: symbol, size: size, color: color },
-            text: val[i].sample,
-            sampleName: val[i].sample,
-            hovertemplate: 'sample: %{text}<br>value: %{y}'
-          }
-          self.landmarkPeakAreaData.push(trace)
-        }
-
-        self.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+        self.renderLandmarkRtPanel(val)
+        self.renderLandmarkIntensityPanel(val)
+        self.renderLandmarkRelMzErrorPanel(val)
+        self.renderLandmarkPeakAreaPanel(val)
       })
+    },
+    renderBasePeakCurrentPanel (bpcList) {
+      this.basePeakCurrentData = []
+      for (let i = 0; i < bpcList.length; i++) {
+        const val = bpcList[i]
+        let bpcTrace = {
+          name: val.sample,
+          mode: 'lines',
+          x: val.rt,
+          y: val.intensity,
+          line: { width: 1 }
+        }
+        this.basePeakCurrentData.push(bpcTrace)
+      }
+      this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+    },
+    renderTotalIonCurrentPanel (ticList) {
+      this.totalIonCurrentData = []
+      for (let i = 0; i < ticList.length; i++) {
+        const val = ticList[i]
+        let ticTrace = {
+          name: val.sample,
+          x: val.rt,
+          y: val.tic,
+          line: { width: 1 }
+        }
+        this.totalIonCurrentData.push(ticTrace)
+      }
+      this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+    },
+    renderExtractIonCurrentPanel (val) {
+      this.extractIonCurrentData = []
+      for (let i = 0; i < val.length; i++) {
+        let extractIonCurrentTrace = {
+          name: val[i].landmark,
+          x: val[i].rt,
+          y: val[i].intensity,
+          mode: 'lines',
+          line: { width: 1 },
+          marker: { size: 1 },
+          connectgaps: false
+        }
+        this.extractIonCurrentData.push(extractIonCurrentTrace)
+      }
+      this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+    },
+    renderLandmarkRtPanel (val) {
+      this.landmarkRtData = []
+      for (let i = 0; i < val.length; i++) {
+        let option = this.panelOptions.landmarkRt
+        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+        let trace = {
+          name: val[i].landmark,
+          mode: 'lines+markers',
+          x: val[i].index,
+          y: val[i].rt,
+          line: { width: option.lineWidth },
+          marker: { symbol: symbol, size: size, color: color },
+          text: val[i].sample,
+          sampleName: val[i].sample,
+          hovertemplate: 'sample: %{text}<br>value: %{y}'
+        }
+        this.landmarkRtData.push(trace)
+      }
+      this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+    },
+    renderLandmarkIntensityPanel (val) {
+      this.landmarkIntensityData = []
+      for (let i = 0; i < val.length; i++) {
+        let option = this.panelOptions.landmarkIntensity
+        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+        let trace = {
+          name: val[i].landmark,
+          mode: 'lines+markers',
+          x: val[i].index,
+          y: val[i].intensity,
+          line: { width: option.lineWidth },
+          marker: { symbol: symbol, size: size, color: color },
+          text: val[i].sample,
+          sampleName: val[i].sample,
+          hovertemplate: 'sample: %{text}<br>value: %{y}'
+        }
+        this.landmarkIntensityData.push(trace)
+        this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+      }
+    },
+    renderLandmarkRelMzErrorPanel (val) {
+      this.landmarkRelMzErrorData = []
+      for (let i = 0; i < val.length; i++) {
+        let option = this.panelOptions.landmarkRelMzError
+        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+        let trace = {
+          name: val[i].landmark,
+          mode: 'lines+markers',
+          x: val[i].index,
+          y: val[i].relMzError,
+          line: { width: option.lineWidth },
+          marker: { symbol: symbol, size: size, color: color },
+          text: val[i].sample,
+          sampleName: val[i].sample,
+          hovertemplate: 'sample: %{text}<br>value: %{y}'
+        }
+        this.landmarkRelMzErrorData.push(trace)
+      }
+      this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+    },
+    renderLandmarkAbsMzErrorPanel (val) {
+      this.landmarkAbsMzErrorData = []
+      for (let i = 0; i < val.length; i++) {
+        let option = this.panelOptions.landmarkAbsMzError
+        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+        let trace = {
+          name: val[i].landmark,
+          mode: 'lines+markers',
+          x: val[i].index,
+          y: val[i].absMzError,
+          line: { width: option.lineWidth },
+          marker: { symbol: symbol, size: size, color: color },
+          text: val[i].sample,
+          sampleName: val[i].sample,
+          hovertemplate: 'sample: %{text}<br>value: %{y}'
+        }
+        this.landmarkAbsMzErrorData.push(trace)
+      }
+      this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+    },
+    renderLandmarkPeakAreaPanel (val) {
+      this.landmarkPeakAreaData = []
+      for (let i = 0; i < val.length; i++) {
+        let option = this.panelOptions.landmarkPeakArea
+        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+        let trace = {
+          name: val[i].landmark,
+          mode: 'lines+markers',
+          x: val[i].index,
+          y: val[i].peakArea,
+          line: { width: option.lineWidth },
+          marker: { symbol: symbol, size: size, color: color },
+          text: val[i].sample,
+          sampleName: val[i].sample,
+          hovertemplate: 'sample: %{text}<br>value: %{y}'
+        }
+        this.landmarkPeakAreaData.push(trace)
+      }
+      this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
     },
     refreshData (data, options) {
       for (var i = 0; i < data.length; i++) {
@@ -2441,7 +2493,7 @@ export default {
       var self = this
       this.axios({
         method: 'get',
-        url: API_BASE + '/project'
+        url: API_BASE + '/projects'
       }).then(successResp => {
         if (successResp.data.code === 200) {
           self.projects = successResp.data.data
@@ -2450,8 +2502,49 @@ export default {
         console.log(failResp)
       })
     },
-    openProject (id) {
-      console.log(id)
+    loadProject (id) {
+      var self = this
+      this.axios({
+        method: 'get',
+        url: API_BASE + `/project/${id}`
+      }).then(successResp => {
+        if (successResp.data.code === 200) {
+          const data = successResp.data.data
+          self.monitorTask.monitoring = false
+          self.monitorTask.taskId = data.taskId
+          self.monitorTask.monitorPath = data.monitorPath
+          self.monitorTask.monitorSamples = data.monitorSamples
+
+          const bpcList = data.basePeakCurrentList
+          self.renderBasePeakCurrentPanel(bpcList)
+
+          const ticList = data.totalIonCurrentList
+          self.renderTotalIonCurrentPanel(ticList)
+
+          const eicList = data.extractIonCurrentList
+          self.renderExtractIonCurrentPanel(eicList)
+
+          const landmarkDataList = data.landmarkDataList
+          self.renderLandmarkRtPanel(landmarkDataList)
+          self.renderLandmarkIntensityPanel(landmarkDataList)
+          self.renderLandmarkRelMzErrorPanel(landmarkDataList)
+          self.renderLandmarkAbsMzErrorPanel(landmarkDataList)
+          self.renderLandmarkPeakAreaPanel(landmarkDataList)
+        } else {
+          this.$notify({
+            title: 'Project load failure, please try again later.',
+            type: 'warning'
+          })
+        }
+      }).catch(failResp => {
+        console.log(failResp)
+        this.$notify({
+          title: 'Project load failure, please try again later.',
+          type: 'warning'
+        })
+      })
+
+      this.openProjectDrawerVisible = false
     },
     deleteProject (row) {
       var self = this

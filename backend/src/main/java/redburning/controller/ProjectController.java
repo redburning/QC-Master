@@ -15,6 +15,7 @@ import redburning.entity.MonitorFilesEntity;
 import redburning.entity.ProjectEntity;
 import redburning.service.MonitorFilesService;
 import redburning.service.ProjectService;
+import redburning.vo.ProjectDataVo;
 import redburning.vo.ProjectVo;
 import redburning.vo.Result;
 
@@ -28,7 +29,7 @@ public class ProjectController {
 	private MonitorFilesService monitorFilesService;
 	
 	@PutMapping(value = "/project/{id}")
-	public Result updateProjectName(@PathVariable(value = "id") String id, @RequestBody ProjectEntity project) {
+	public Result updateProject(@PathVariable(value = "id") String id, @RequestBody ProjectEntity project) {
 		try {
 			String name = project.getName();
 			ProjectEntity projectEntity = projectService.getProject(id);
@@ -42,17 +43,17 @@ public class ProjectController {
 	}
 	
 	@GetMapping(value = "/project/{id}")
-	public Result getProject(@PathVariable(value = "id") String id) {
+	public Result loadProjectData(@PathVariable(value = "id") String id) {
 		try {
-			ProjectEntity project = projectService.getProject(id);
-			return Result.success(project);
+			ProjectDataVo projectDataVo = projectService.loadProjectData(id);
+			return Result.success(projectDataVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Result.error(e.getMessage());
 		}
 	}
 	
-	@GetMapping(value = "/project")
+	@GetMapping(value = "/projects")
 	public Result getAllProjects() {
 		try {
 			List<ProjectVo> projectVoList = new ArrayList<>();
