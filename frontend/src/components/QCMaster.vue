@@ -23,20 +23,20 @@
         <div>
           <el-input v-model="monitorTask.monitorPath" size="small" style="width:500px;" :class="{ monitoring: monitorTask.monitoring }">
             <template slot="prepend">
-              <el-button type="primary" size="small" icon="el-icon-folder-opened" @click="loadMonitorDirTree">Browse</el-button>
+              <el-button type="primary" size="small" icon="el-icon-folder-opened" @click="loadMonitorDirTree" class="simple-btn">Browse</el-button>
             </template>
           </el-input>
         </div>
 
         <div style="display:flex; align-items: center; gap: 10px;">
-          <el-tooltip class="item" effect="dark" content="Open workspace" placement="bottom">
-            <el-button size="small" @click="openWorkspaceDrawerVisible = true" class="toolbar-button" style="display:none;">
-              <svg t="1696499479915" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6986" width="18" height="18"><path d="M513.2 747.5c-4.2 0-8.5-0.9-12.4-2.7l-342-155.4c-21.1-7.9-41.5-17.9-60.6-29.9-14-8.8-18.3-27.3-9.5-41.3 8.8-14 27.3-18.3 41.3-9.5 15.9 10 32.9 18.3 50.6 24.8 0.7 0.3 1.4 0.5 2 0.8l330.6 150.2L846 533.8c10-4.7 20-9.5 29.8-14.5 0.1-0.1 0.2-0.1 0.4-0.2l21.3-10.4c14.9-7.3 32.9-1.1 40.1 13.8 7.3 14.9 1.1 32.9-13.8 40.1L902.6 573c-10.3 5.2-20.8 10.3-31.3 15.2-0.1 0.1-0.2 0.1-0.3 0.2L525.6 744.9c-3.9 1.7-8.1 2.6-12.4 2.6z" fill="#2C2C2C" p-id="6987"></path><path d="M513.2 924.7c-4.2 0-8.5-0.9-12.4-2.7L157.9 766.6c-20.6-8-40.5-17.8-59.4-29.3-14.2-8.6-18.7-27.1-10.1-41.2s27.1-18.7 41.2-10.1c16 9.7 33.1 18.1 50.6 24.9 0.5 0.2 1.1 0.4 1.6 0.7l331.3 150.2 332.7-151.3c10.2-4.8 20-9.6 29.9-14.6 0.1 0 0.2-0.1 0.3-0.1l21.4-10.4c14.9-7.2 32.9-1 40.1 13.9 7.2 14.9 1 32.9-13.9 40.1l-21.2 10.3c-10.3 5.2-20.5 10.1-31.1 15.2-0.1 0.1-0.3 0.1-0.4 0.2l-345.3 157c-3.9 1.7-8.1 2.6-12.4 2.6zM513.6 151.5c6.5 0 12.9 1.9 18.3 5.5l2.7 1.8 2.9 1.5L860 327.8c3 2.1 4.7 5.7 4.5 9.4l-0.2 2.5v2.5c0 2.2-1.1 4.3-2.9 5.5L537.6 491l-1.2 0.6-1.2 0.6c-7.2 3.6-14.9 5.7-22.9 6.4-7-0.7-13.9-2.7-20.2-6l-1.8-0.9-1.8-0.8-322.9-142.8c-2.2-1.5-3.6-3.9-3.7-6.6v-1l-0.1-1c-0.2-4.3 1.5-8.4 4.7-11.2l324.1-168.5 2.5-1.3 2.4-1.6c5.5-3.6 11.7-5.4 18.1-5.4m0-60c-17.6 0-35.2 5-50.6 15L134.9 277c-21.9 14.5-34.5 39.5-33 65.8 0.6 25 14.8 47.7 37.1 59.1l325.1 143.8c15 7.9 31.5 12.3 48.4 13v-0.1c17.1-0.8 33.9-5.1 49.3-12.8L888 401.7c22.5-11.5 36.7-34.8 36.4-60.1 1.9-26.8-11.5-52.4-34.8-66L565.2 107.1c-15.6-10.4-33.6-15.6-51.6-15.6z" fill="#2C2C2C" p-id="6988"></path></svg>
+          <el-tooltip class="item" effect="dark" content="Recent projects" placement="bottom">
+            <el-button size="small" @click="onOpenRecentProjects" class="toolbar-button">
+              <svg t="1739326766423" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7156" width="16" height="16"><path d="M512 629.76c-20.48 0-40.96-5.12-61.44-15.36L46.08 409.6C15.36 394.24 0 363.52 0 327.68c0-35.84 15.36-66.56 46.08-81.92l404.48-204.8c46.08-25.6 87.04-15.36 117.76 0h5.12l404.48 204.8c30.72 15.36 46.08 46.08 46.08 81.92 0 35.84-15.36 66.56-46.08 81.92l-404.48 204.8c-20.48 10.24-40.96 15.36-61.44 15.36zM87.04 332.8l404.48 204.8c15.36 10.24 20.48 10.24 46.08 0l399.36-204.8v-10.24l-399.36-204.8c-20.48-10.24-30.72-10.24-46.08 0l-404.48 204.8v10.24z" fill="#231815" p-id="7157"></path><path d="M512 814.08c-20.48 0-40.96-5.12-61.44-15.36l-404.48-204.8c-20.48-10.24-30.72-35.84-20.48-61.44 10.24-20.48 40.96-30.72 61.44-20.48l404.48 204.8c15.36 10.24 25.6 10.24 46.08 0l404.48-204.8c20.48-10.24 46.08 0 61.44 20.48 10.24 20.48 0 46.08-20.48 61.44l-404.48 204.8c-25.6 10.24-46.08 15.36-66.56 15.36z" fill="#231815" p-id="7158"></path><path d="M512 998.4c-20.48 0-40.96-5.12-61.44-15.36l-404.48-204.8C25.6 768 15.36 737.28 25.6 716.8c10.24-20.48 35.84-30.72 61.44-20.48l404.48 204.8c15.36 10.24 25.6 10.24 46.08 0l404.48-204.8c20.48-10.24 46.08 0 61.44 20.48 10.24 20.48 0 46.08-20.48 61.44l-404.48 204.8c-25.6 10.24-46.08 15.36-66.56 15.36z" fill="#231815" p-id="7159"></path></svg>
             </el-button>
           </el-tooltip>
 
-          <el-tooltip class="item" effect="dark" content="Save workspace" placement="bottom">
-            <el-button size="small" @click="saveWorkspaceDialogVisible = true" class="toolbar-button" style="margin-left:0px; display:flex; align-items: center;">
+          <el-tooltip class="item" effect="dark" content="Save project" placement="bottom">
+            <el-button size="small" @click="saveProjectDialogVisible = true" class="toolbar-button" style="margin-left:0px; display:flex; align-items: center;">
               <span>
                 <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" width="18" height="18" class="css-sr6nr"><path d="M20.71,9.29l-6-6a1,1,0,0,0-.32-.21A1.09,1.09,0,0,0,14,3H6A3,3,0,0,0,3,6V18a3,3,0,0,0,3,3H18a3,3,0,0,0,3-3V10A1,1,0,0,0,20.71,9.29ZM9,5h4V7H9Zm6,14H9V16a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1Zm4-1a1,1,0,0,1-1,1H17V16a3,3,0,0,0-3-3H10a3,3,0,0,0-3,3v3H6a1,1,0,0,1-1-1V6A1,1,0,0,1,6,5H7V8A1,1,0,0,0,8,9h6a1,1,0,0,0,1-1V6.41l4,4Z"></path></svg>
               </span>
@@ -129,8 +129,8 @@
             </div>
           </div>
 
-          <el-button size="small" @click="start" :disabled="monitorTask.monitoring" class="start-button" style="margin-left:0px; display:flex; align-items:center;">start</el-button>
-          <el-button size="small" @click="stop" :disabled="!monitorTask.monitoring" class="stop-button" style="margin-left: 0px;">stop</el-button>
+          <el-button size="small" @click="start" :disabled="monitorTask.monitoring" class="primary-button" style="margin-left:0px; display:flex; align-items:center;">Start</el-button>
+          <el-button size="small" @click="stop" :disabled="!monitorTask.monitoring" class="danger-button" style="margin-left: 0px;">Stop</el-button>
           <el-tooltip class="item" effect="dark" content="Cycle view mode" placement="bottom">
             <el-button size="mini" class="toolbar-button" @click="toggleViewMode" style="margin-left: 0px;">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="fill:currentColor">
@@ -392,7 +392,7 @@
             <div v-if="item.i === 5">
               <div class="panelToolsBar vue-draggable-handle">
                 <el-dropdown trigger="click" @command="handleDropdownOfPanel">
-                  <span>Peak Area<i class="el-icon-arrow-down el-icon--right"></i></span>
+                  <span>{{ panelTitleOfPeakArea }}<i class="el-icon-arrow-down el-icon--right"></i></span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="viewLandmarkPeakArea">
                       <div style="display: flex; align-items: center;">
@@ -410,11 +410,27 @@
                         <span style="padding-left:5px; padding-right: 20px;">Edit</span>
                       </div>
                     </el-dropdown-item>
+                    <el-dropdown-item style="padding: 0px 0px 0px 10px">
+                      <el-dropdown placement="right-start" style="width:100%" @command="filterLandmarkPeakAreaData">
+                        <div style="display:flex; justify-content: space-between;">
+                          <div style="display:flex; align-items:center; width:120px">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M20.47,7.37s0,0,0-.08l-.06-.15a.71.71,0,0,0-.07-.09.94.94,0,0,0-.09-.12l-.09-.07L20,6.78l-7.5-4.63a1,1,0,0,0-1.06,0L4,6.78l-.09.08-.09.07a.94.94,0,0,0-.09.12.71.71,0,0,0-.07.09l-.06.15s0,0,0,.08a1.15,1.15,0,0,0,0,.26v8.74a1,1,0,0,0,.47.85l7.5,4.63h0a.47.47,0,0,0,.15.06s.05,0,.08,0a.86.86,0,0,0,.52,0s.05,0,.08,0a.47.47,0,0,0,.15-.06h0L20,17.22a1,1,0,0,0,.47-.85V7.63A1.15,1.15,0,0,0,20.47,7.37ZM11,19.21l-5.5-3.4V9.43L11,12.82Zm1-8.12L6.4,7.63,12,4.18l5.6,3.45Zm6.5,4.72L13,19.21V12.82l5.5-3.39Z"></path></svg>
+                            <span style="margin-left:3px">Select Data</span>
+                          </div>
+                          <div style="display:flex; align-items:center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-ejzmsl"><path d="M14.83,11.29,10.59,7.05a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41L12.71,12,9.17,15.54a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29l4.24-4.24A1,1,0,0,0,14.83,11.29Z"></path></svg>
+                          </div>
+                        </div>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item v-for="option in [{'id':'0000', name:'All data'}].concat(landmarkData)" :key="option.id" :command=option.name style="font-size:12px;">{{ option.name }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
               <div class="no-drag">
-                <vue-plotly :data="landmarkPeakAreaData" :layout="landmarkPeakAreaLayout" :options="defaultPlotOptions" style="height: calc(100% - 40px);"></vue-plotly>
+                <vue-plotly :data="selectedLandmarkPeakAreaData" :layout="landmarkPeakAreaLayout" :options="defaultPlotOptions" style="height: calc(100% - 40px);"></vue-plotly>
               </div>
             </div>
           </grid-item>
@@ -651,7 +667,7 @@
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkIntensity'">UQL(std)</span>
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRelMzError'">UQL(ppm)</span>
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkAbsMzError'">UQL(mDa)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkArea'">UQL(std)</span>
+                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkPeakArea'">UQL(std)</span>
                           </div>
                           <el-input-number v-model="editorPanelOptions.UQL" :step="0.1" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
@@ -663,7 +679,7 @@
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkIntensity'">BQL(std)</span>
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRelMzError'">BQL(ppm)</span>
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkAbsMzError'">BQL(mDa)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkArea'">BQL(std)</span>
+                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkPeakArea'">BQL(std)</span>
                           </div>
                           <el-input-number v-model="editorPanelOptions.BQL" :step="0.1" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
@@ -705,7 +721,7 @@
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkIntensity'">UWL(std)</span>
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRelMzError'">UWL(ppm)</span>
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkAbsMzError'">UWL(mDa)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkArea'">UWL(std)</span>
+                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkPeakArea'">UWL(std)</span>
                           </div>
                           <el-input-number v-model="editorPanelOptions.UWL" :step="0.1" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
@@ -717,7 +733,7 @@
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkIntensity'">BWL(std)</span>
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRelMzError'">BWL(ppm)</span>
                             <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkAbsMzError'">BWL(mDa)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkArea'">BWL(std)</span>
+                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkPeakArea'">BWL(std)</span>
                           </div>
                           <el-input-number v-model="editorPanelOptions.BWL" :step="0.1" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
@@ -750,13 +766,13 @@
       </div>
     </div>
 
-    <el-dialog title="选择文件目录" :visible.sync="selectMonitorFileDialogVisible" custom-class="custom-dilaog">
+    <el-dialog title="Choose monitor directory" :visible.sync="selectMonitorFileDialogVisible" custom-class="custom-dilaog" width="800px" class="monitor-dialog">
       <div>
         <ul id="tree" class="ztree"></ul>
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button size="mini" @click="selectMonitorFileDialogVisible = false">Cancel</el-button>
-        <el-button type="primary" size="mini" @click="monitorFileConfirm">OK</el-button>
+        <el-button type="primary" size="mini" @click="monitorFileConfirm" class="primary-btn">OK</el-button>
       </div>
     </el-dialog>
 
@@ -854,20 +870,42 @@
       </el-tabs>
     </el-dialog>
 
-    <el-dialog title="Save workspace" :visible.sync="saveWorkspaceDialogVisible" custom-class="custom-dilaog" width="500px">
+    <el-dialog title="Save project" :visible.sync="saveProjectDialogVisible" custom-class="custom-dilaog" width="500px">
       <el-form size="mini" label-width="125px">
-        <el-form-item label="Workspace name">
-          <el-input v-model="workspace.name" class="input-outline"></el-input>
+        <el-form-item label="Project name">
+          <el-input v-model="project.name" class="input-outline"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSaveWorkspace">Save</el-button>
-          <el-button @click="saveWorkspaceDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="onSaveProject" class="primary-btn">Save</el-button>
+          <el-button @click="saveProjectDialogVisible = false">Cancel</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
 
-    <el-drawer title="Open workspace" :visible.sync="openWorkspaceDrawerVisible" direction="rtl">
-      <span></span>
+    <el-drawer title="Recent projects" :visible.sync="openProjectDrawerVisible" direction="rtl" size="40%">
+      <hr class="divider-line">
+      <div id="table-projects">
+        <el-table :data="projects" border style="width:100%" :row-class-name="projectRowClassName">
+          <el-table-column prop="createTime" label="Create time" width="160"></el-table-column>
+          <el-table-column prop="name" label="Name"></el-table-column>
+          <el-table-column prop="sampleNumber" label="Sample number" width="130"></el-table-column>
+          <el-table-column prop="status" label="Status" width="90"></el-table-column>
+          <el-table-column label="Actions" width="90">
+              <template slot-scope="scope">
+                <div style="display: flex;">
+                  <el-tooltip class="item" effect="dark" content="Open project" placement="bottom">
+                    <el-button type="primary" size="mini" @click="openProject(scope.row.id)" style="display: flex; align-items: center; padding: 2px 6px;">
+                      <svg t="1739331978219" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10781" width="18" height="18"><path d="M1000.106667 375.466667l-129.706667-167.253334c-3.413333-3.413333-6.826667-6.826667-10.24-6.826666L515.413333 160.426667H512h-3.413333L160.426667 201.386667c-3.413333 0-6.826667 3.413333-10.24 6.826666L20.48 372.053333c-3.413333 6.826667-3.413333 13.653333 0 20.48 3.413333 6.826667 10.24 10.24 13.653333 10.24h3.413334l348.16-40.96c3.413333 0 10.24-3.413333 10.24-6.826666L512 204.8l116.053333 153.6c3.413333 3.413333 6.826667 6.826667 10.24 6.826667L986.453333 409.6h3.413334c10.24 0 17.066667-6.826667 17.066666-17.066667 0-6.826667-3.413333-13.653333-6.826666-17.066666z" fill="#ffffff" p-id="10782"></path><path d="M484.693333 314.026667c-6.826667-3.413333-13.653333 0-20.48 6.826666L419.84 375.466667c-6.826667 10.24-20.48 17.066667-34.133333 20.48l-218.453334 27.306666c-10.24 0-13.653333 6.826667-13.653333 17.066667v293.546667c0 6.826667 3.413333 13.653333 10.24 17.066666l307.2 116.053334h6.826667c3.413333 0 6.826667 0 10.24-3.413334 3.413333-3.413333 6.826667-6.826667 6.826666-13.653333V327.68c0-6.826667-3.413333-13.653333-10.24-13.653333z m-30.72 351.573333c-3.413333 3.413333-6.826667 3.413333-13.653333 3.413333s-10.24 0-13.653333-3.413333l-37.546667-37.546667v95.573334c0 10.24-6.826667 17.066667-17.066667 17.066666s-17.066667-6.826667-17.066666-17.066666v-95.573334l-37.546667 37.546667c-6.826667 6.826667-17.066667 6.826667-23.893333 0s-6.826667-17.066667 0-23.893333l68.266666-68.266667s3.413333-3.413333 6.826667-3.413333c3.413333-3.413333 10.24-3.413333 13.653333 0 3.413333 0 3.413333 3.413333 6.826667 3.413333l68.266667 68.266667c3.413333 6.826667 3.413333 17.066667-3.413334 23.893333zM856.746667 426.666667l-218.453334-27.306667c-13.653333 0-27.306667-10.24-34.133333-20.48l-40.96-54.613333c-3.413333-6.826667-13.653333-6.826667-20.48-6.826667-6.826667 3.413333-10.24 10.24-10.24 17.066667v512c0 6.826667 3.413333 10.24 6.826667 13.653333 3.413333 3.413333 6.826667 3.413333 10.24 3.413333h6.826666l307.2-109.226666c6.826667-3.413333 10.24-10.24 10.24-17.066667V443.733333c-3.413333-10.24-10.24-17.066667-17.066666-17.066666z m-119.466667 279.893333l-119.466667 34.133333H614.4c-6.826667 0-13.653333-3.413333-17.066667-13.653333-3.413333-10.24 3.413333-17.066667 10.24-20.48l119.466667-34.133333c10.24-3.413333 17.066667 3.413333 20.48 10.24 3.413333 10.24 0 20.48-10.24 23.893333z" fill="#ffffff" p-id="10783"></path></svg>
+                    </el-button>
+                  </el-tooltip>
+                  <el-tooltip class="item" effect="dark" content="Delete project" placement="bottom">
+                    <el-button type="danger" size="mini" style="background-color: #c40000; border-color: #c40000; padding: 2px 8px;" icon="el-icon-delete" @click="deleteProject(scope.row)"></el-button>
+                  </el-tooltip>
+                </div>
+              </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </el-drawer>
 
   </div>
@@ -886,10 +924,10 @@ import { GridLayout, GridItem } from 'vue-grid-layout'
 import html2canvas from 'html2canvas'
 
 // 开发环境
-const API_BASE = 'api'
+// const API_BASE = 'api'
 
 // 生产环境
-// const API_BASE = ''
+const API_BASE = ''
 
 const HEADER_HEIGHT = 70
 const SIDEBAR_WIDTH = 150
@@ -912,7 +950,6 @@ export default {
         monitoring: false,
         serialNumber: 0
       },
-      timer: null,
       // 隐藏侧边栏
       viewMode: 'default',
       router: { path: 'overview', type: '' },
@@ -933,6 +970,7 @@ export default {
       panelTitleOfIntensity: 'Peak Intensity',
       panelTitleOfRelMzError: 'Relative m/z Error',
       panelTitleOfAbsMzError: 'Absolute m/z Error',
+      panelTitleOfPeakArea: 'Peak Area',
       // panel options
       ionCurrentPanelOptions: {
         lineWidth: 1,
@@ -941,106 +979,7 @@ export default {
         markerShapeOfQC: 'diamond',
         markerShapeOfBlank: ''
       },
-      landmarkRtPanelOptions: {
-        lineWidth: 1,
-        markerSizeOfQC: 6,
-        markerSizeOfBlank: 4,
-        markerShapeOfQC: 'diamond',
-        markerShapeOfBlank: '',
-        markerColorOfQC: '#1CA085',
-        markerColorOfBlank: '',
-        showQL: true,
-        showWL: true,
-        // rt(min)
-        UQL: 0.5,
-        BQL: -0.5,
-        UWL: 1,
-        BWL: -1,
-        lineWidthOfQL: 1,
-        lineWidthOfWL: 1,
-        lineColorOfQL: 'orange',
-        lineColorOfWL: 'orange'
-      },
-      landmarkIntensityPanelOptions: {
-        lineWidth: 1,
-        markerSizeOfQC: 6,
-        markerSizeOfBlank: 4,
-        markerShapeOfQC: 'diamond',
-        markerShapeOfBlank: '',
-        markerColorOfQC: '',
-        markerColorOfBlank: '',
-        showQL: true,
-        showWL: true,
-        // intensity (std)
-        UQL: 2,
-        BQL: -2,
-        UWL: 3,
-        BWL: -3,
-        lineWidthOfQL: 1,
-        lineWidthOfWL: 1,
-        lineColorOfQL: 'orange',
-        lineColorOfWL: 'orange'
-      },
-      landmarkRelMzErrorPanelOptions: {
-        lineWidth: 1,
-        markerSizeOfQC: 6,
-        markerSizeOfBlank: 4,
-        markerShapeOfQC: 'diamond',
-        markerShapeOfBlank: '',
-        markerColorOfQC: '',
-        markerColorOfBlank: '',
-        showQL: true,
-        showWL: true,
-        // relative m/z error (ppm)
-        UQL: 5,
-        BQL: -5,
-        UWL: 10,
-        BWL: -10,
-        lineWidthOfQL: 1,
-        lineWidthOfWL: 1,
-        lineColorOfQL: 'orange',
-        lineColorOfWL: 'orange'
-      },
-      landmarkAbsMzErrorPanelOptions: {
-        lineWidth: 1,
-        markerSizeOfQC: 6,
-        markerSizeOfBlank: 4,
-        markerShapeOfQC: 'diamond',
-        markerShapeOfBlank: '',
-        markerColorOfQC: '',
-        markerColorOfBlank: '',
-        showQL: true,
-        showWL: true,
-        // absolute m/z error (mDa)
-        UQL: 5,
-        BQL: -5,
-        UWL: 10,
-        BWL: -10,
-        lineWidthOfQL: 1,
-        lineWidthOfWL: 1,
-        lineColorOfQL: 'orange',
-        lineColorOfWL: 'orange'
-      },
-      landmarkPeakAreaPanelOptions: {
-        lineWidth: 1,
-        markerSizeOfQC: 6,
-        markerSizeOfBlank: 4,
-        markerShapeOfQC: 'diamond',
-        markerShapeOfBlank: '',
-        markerColorOfQC: '',
-        markerColorOfBlank: '',
-        showQL: true,
-        showWL: true,
-        // area (std)
-        UQL: 2,
-        BQL: -2,
-        UWL: 3,
-        BWL: -3,
-        lineWidthOfQL: 1,
-        lineWidthOfWL: 1,
-        lineColorOfQL: 'orange',
-        lineColorOfWL: 'orange'
-      },
+      panelOptions: {},
       // 调色板
       swatches: ['#1fbc9c', '#1ca085', '#2ecc70', '#3cb770', '#3398db', '#2980b9', '#a463bf', '#8e43ad', '#3d556e', '#222f3d', '#f2c511', '#f39c19', '#e84b3c', '#c0382b', '#bdc3c8', ''],
       // 基本参数
@@ -1075,6 +1014,8 @@ export default {
       selectedLandmarkOfRelMzError: 'All data',
       selectedLandmarkAbsMzErrorData: [],
       selectedLandmarkOfAbsMzError: 'All data',
+      selectedLandmarkPeakAreaData: [],
+      selectedLandmarkOfPeakArea: 'All data',
       defaultPlotOptions: {
         displayModeBar: false,
         displaylogo: false
@@ -1235,18 +1176,20 @@ export default {
       sampleDropdownMenuOptions: [ { label: 'All samples', value: 'All samples' }, { label: 'Last 20 samples', value: 20 }, { label: 'Last 50 samples', value: 50 },
         { label: 'Last 100 samples', value: 100 }, { label: 'Last 200 samples', value: 200 }, { label: 'Last 500 samples', value: 500 }],
       selectedLandmark: 'All landmarks',
-      // workspace
-      saveWorkspaceDialogVisible: false,
-      openWorkspaceDrawerVisible: false,
-      workspace: {
-        name: 'New workspace'
-      }
+      // project
+      saveProjectDialogVisible: false,
+      openProjectDrawerVisible: false,
+      project: {
+        name: 'New project'
+      },
+      projects: []
     }
   },
   mounted () {
     // this.loadMonitorDirTree()
     this.loadLandmarks()
     this.loadGridLayout()
+    this.loadPanelOptions('default')
 
     // 监听Esc按键被按下
     var self = this
@@ -1398,10 +1341,23 @@ export default {
           }
         }
       }
+
+      // landmark peak area
+      if (this.selectedLandmarkOfPeakArea === 'All data') {
+        this.selectedLandmarkPeakAreaData = this.landmarkPeakAreaData
+      } else {
+        for (let i = 0; i < this.landmarkPeakAreaData.length; i++) {
+          if (this.landmarkPeakAreaData[i].name === this.selectedLandmarkOfPeakArea) {
+            this.selectedLandmarkPeakAreaData = [this.landmarkPeakAreaData[i]]
+            break
+          }
+        }
+      }
     }
   },
   methods: {
     loadMonitorDirTree () {
+      this.selectMonitorFileDialogVisible = true
       var setting = {
         data: { simpleData: { enable: true } },
         async: {
@@ -1422,8 +1378,9 @@ export default {
           selectedMulti: false // 禁止多选
         }
       }
-      this.zTreeObj = $.fn.zTree.init($('#tree'), setting)
-      this.selectMonitorFileDialogVisible = true
+      this.$nextTick(() => {
+        this.zTreeObj = $.fn.zTree.init($('#tree'), setting)
+      })
     },
     monitorFileConfirm () {
       var selectedNode = this.zTreeObj.getSelectedNodes()
@@ -1431,235 +1388,210 @@ export default {
       this.selectMonitorFileDialogVisible = false
     },
     start () {
+      var self = this
       var queryBody = this.buildQueryBody()
-      this.axios({
-        method: 'post',
-        url: API_BASE + '/task/create',
-        data: queryBody
-      }).then(successResp => {
-        if (successResp.data.code === 200) {
-          this.monitorTask.taskId = successResp.data.data.taskid
-          this.monitorTask.monitoring = true
-          this.timer = setInterval(() => {
-            this.update()
-          }, 5000)
-        }
-      }).catch(failResp => {
-        console.log(failResp)
-        clearInterval(this.timer)
-      })
+
+      // resume task
+      if (self.monitorTask.taskId !== null) {
+        this.axios({
+          method: 'post',
+          url: API_BASE + `/task/resume/${self.monitorTask.taskId}`,
+          data: queryBody
+        }).then(successResp => {
+          self.monitorTask.monitoring = true
+        }).catch(failResp => {
+          console.log(failResp)
+        })
+      } else {
+        // create task
+        this.axios({
+          method: 'post',
+          url: API_BASE + '/task/create',
+          data: queryBody
+        }).then(successResp => {
+          if (successResp.data.code === 200) {
+            const taskId = successResp.data.data
+            self.monitorTask.taskId = taskId
+            self.monitorTask.monitoring = true
+            self.fetchData()
+          }
+        }).catch(failResp => {
+          console.log(failResp)
+        })
+      }
     },
     stop () {
       this.axios({
         method: 'get',
-        url: API_BASE + '/task/suspend/' + this.monitorTask.taskId
+        url: API_BASE + '/task/stop/' + this.monitorTask.taskId
       }).then(successResp => {
-        clearInterval(this.timer)
         this.monitorTask.monitoring = false
       }).catch(failResp => {
         console.log(failResp)
-        clearInterval(this.timer)
         this.monitorTask.monitoring = false
       })
     },
-    update () {
-      this.updateIonCurrent()
-      this.updateLandmarks()
-    },
-    async updateIonCurrent () {
-      await this.axios({
-        method: 'get',
-        url: API_BASE + '/task/data/ionflow/' + this.monitorTask.taskId + '?sample=all'
-      }).then(successResp => {
-        if (successResp.data.code === 200) {
-          // update base peak current & total ion current
-          this.basePeakCurrentData = []
-          this.totalIonCurrentData = []
-          this.monitorTask.monitorFiles = successResp.data.data.monitorFiles
-          this.monitorTask.monitorSamples = successResp.data.data.monitorFiles.map(e => e.substring(e.lastIndexOf('\\') + 1, e.lastIndexOf('.')))
-          for (let i = 0; i < successResp.data.data.basePeakCurrent.length; i++) {
-            let name = successResp.data.data.basePeakCurrent[i].name
-            // this.monitorTask.monitorSamples.push(name)
-
-            let bpcTrace = {
-              name: name,
-              mode: 'lines',
-              x: successResp.data.data.basePeakCurrent[i].data[0],
-              y: successResp.data.data.basePeakCurrent[i].data[1],
-              line: { width: 1 }
-            }
-            this.basePeakCurrentData.push(bpcTrace)
-
-            let ticTrace = {
-              name: name,
-              x: successResp.data.data.totalIonCurrent[i].data[0],
-              y: successResp.data.data.totalIonCurrent[i].data[1],
-              line: { width: 1 }
-            }
-            this.totalIonCurrentData.push(ticTrace)
-          }
-
-          this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1 // 生成一个1到10000的随机整数
-        }
-      }).catch(failResp => {
-        console.log(failResp)
-      })
-    },
-    async updateLandmarks () {
+    fetchData () {
       var self = this
-      await this.axios({
-        method: 'get',
-        url: API_BASE + '/task/data/landmarks/' + this.monitorTask.taskId + '?landmark=' + this.selectedLandmark + '&sample=' + this.selectedLastNSamples.value
-      }).then(successResp => {
-        if (successResp.data.code === 200) {
-          // update landmark datas
-          self.landmarkRtData = []
-          self.landmarkIntensityData = []
-          self.landmarkRelMzErrorData = []
-          self.landmarkAbsMzErrorData = []
-          self.landmarkPeakAreaData = []
-          self.extractIonCurrentData = []
-          for (let i = 0; i < Object.keys(successResp.data.data.landmarkRt).length; i++) {
-            let name = Object.keys(successResp.data.data.landmarkRt)[i]
-            let x = []
-            let y = []
-            let symbol = []
-            let symbolSize = []
-            let symbolColor = []
-            let sampleName = []
-            for (let j = 0; j < successResp.data.data.landmarkRt[name].length; j++) {
-              let sample = successResp.data.data.landmarkRt[name][j].sample
-              x.push(successResp.data.data.landmarkRt[name][j].index)
-              y.push(successResp.data.data.landmarkRt[name][j].value)
-              symbol.push(sample.indexOf('QC') !== -1 ? self.landmarkRtPanelOptions.markerShapeOfQC : self.landmarkRtPanelOptions.markerShapeOfBlank)
-              symbolSize.push(sample.indexOf('QC') !== -1 ? self.landmarkRtPanelOptions.markerSizeOfQC : self.landmarkRtPanelOptions.markerSizeOfBlank)
-              if (self.landmarkRtPanelOptions.markerColorOfQC !== '') {
-                if (sample.indexOf('QC') !== -1) {
-                  symbolColor.push(self.landmarkRtPanelOptions.markerColorOfQC)
-                } else {
-                  if (self.landmarkRtPanelOptions.markerColorOfBlank !== '') {
-                    symbolColor.push(self.landmarkRtPanelOptions.markerColorOfBlank)
-                  } else {
-                    symbolColor.push('rgba(0, 0, 0, 0)')
-                  }
-                }
-              }
-              sampleName.push(sample)
-            }
-            let rtTrace = {
-              name: name,
-              mode: 'lines+markers',
-              x: x,
-              y: y,
-              line: { width: self.landmarkRtPanelOptions.lineWidth },
-              marker: { symbol: symbol, size: symbolSize, color: symbolColor },
-              text: sampleName,
-              sampleName: sampleName,
-              hovertemplate: 'sample: %{text}<br>value: %{y}'
-            }
-            self.landmarkRtData.push(rtTrace)
+      // 创建 EventSource 对象，连接到服务器端点
+      const eventSource = new EventSource(API_BASE + `/task/data/${this.monitorTask.taskId}`)
 
-            x = []
-            y = []
-            symbol = []
-            symbolSize = []
-            sampleName = []
-            for (let j = 0; j < successResp.data.data.landmarkIntensity[name].length; j++) {
-              let sample = successResp.data.data.landmarkIntensity[name][j].sample
-              sampleName.push(sample)
-              x.push(successResp.data.data.landmarkIntensity[name][j].index)
-              y.push(successResp.data.data.landmarkIntensity[name][j].value)
-              symbol.push(sample.indexOf('QC') !== -1 ? self.landmarkIntensityPanelOptions.markerShapeOfQC : self.landmarkIntensityPanelOptions.markerShapeOfBlank)
-              symbolSize.push(sample.indexOf('QC') !== -1 ? self.landmarkIntensityPanelOptions.markerSizeOfQC : self.landmarkIntensityPanelOptions.markerSizeOfBlank)
-            }
-            let intensityTrace = {
-              name: name,
-              mode: 'lines+markers',
-              x: x,
-              y: y,
-              line: { width: self.landmarkIntensityPanelOptions.lineWidth },
-              marker: { symbol: symbol, size: symbolSize },
-              text: sampleName,
-              sampleName: sampleName,
-              hovertemplate: 'sample: %{text}<br>value: %{y}'
-            }
-            self.landmarkIntensityData.push(intensityTrace)
+      // 监听update-sample更新事件
+      eventSource.addEventListener('update-sample', function (event) {
+        self.monitorTask.monitorSamples.push(event.data)
+      })
 
-            x = []
-            y = []
-            symbol = []
-            symbolSize = []
-            sampleName = []
-            for (let j = 0; j < successResp.data.data.landmarkRelMzError[name].length; j++) {
-              let sample = successResp.data.data.landmarkRelMzError[name][j].sample
-              sampleName.push(sample)
-              x.push(successResp.data.data.landmarkRelMzError[name][j].index)
-              y.push(successResp.data.data.landmarkRelMzError[name][j].value)
-              symbol.push(sample.indexOf('QC') !== -1 ? self.landmarkRelMzErrorPanelOptions.markerShapeOfQC : self.landmarkRelMzErrorPanelOptions.markerShapeOfBlank)
-              symbolSize.push(sample.indexOf('QC') !== -1 ? self.landmarkRelMzErrorPanelOptions.markerSizeOfQC : self.landmarkRelMzErrorPanelOptions.markerSizeOfBlank)
-            }
-            let relMzErrorTrace = {
-              name: name,
-              mode: 'lines+markers',
-              x: x,
-              y: y,
-              line: { width: self.landmarkRelMzErrorPanelOptions.lineWidth },
-              marker: { symbol: symbol, size: symbolSize },
-              text: sampleName,
-              sampleName: sampleName,
-              hovertemplate: 'sample: %{text}<br>value: %{y}'
-            }
-            self.landmarkRelMzErrorData.push(relMzErrorTrace)
-
-            x = []
-            y = []
-            symbol = []
-            symbolSize = []
-            sampleName = []
-            for (let j = 0; j < successResp.data.data.landmarkAbsMzError[name].length; j++) {
-              let sample = successResp.data.data.landmarkAbsMzError[name][j].sample
-              sampleName.push(sample)
-              x.push(successResp.data.data.landmarkAbsMzError[name][j].index)
-              y.push(successResp.data.data.landmarkAbsMzError[name][j].value)
-              symbol.push(sample.indexOf('QC') !== -1 ? self.landmarkAbsMzErrorPanelOptions.markerShapeOfQC : self.landmarkAbsMzErrorPanelOptions.markerShapeOfBlank)
-              symbolSize.push(sample.indexOf('QC') !== -1 ? self.landmarkAbsMzErrorPanelOptions.markerSizeOfQC : self.landmarkAbsMzErrorPanelOptions.markerSizeOfBlank)
-            }
-            let absMzErrorTrace = {
-              name: name,
-              mode: 'lines+markers',
-              x: x,
-              y: y,
-              line: { width: self.landmarkAbsMzErrorPanelOptions.lineWidth },
-              marker: { symbol: symbol, size: symbolSize },
-              text: sampleName,
-              sampleName: sampleName,
-              hovertemplate: 'sample: %{text}<br>value: %{y}'
-            }
-            self.landmarkAbsMzErrorData.push(absMzErrorTrace)
-
-            let peakAreaTrace = {
-              name: name,
-              x: successResp.data.data.landmarkPeakArea[name][0],
-              y: successResp.data.data.landmarkPeakArea[name][1],
-              line: { width: 1 },
-              marker: { size: 4 }
-            }
-            self.landmarkPeakAreaData.push(peakAreaTrace)
-
-            let extractIonCurrentTrace = {
-              name: name,
-              x: successResp.data.data.extractIonCurrent[name][0],
-              y: successResp.data.data.extractIonCurrent[name][1],
-              mode: 'lines',
-              line: { width: 1 },
-              marker: { size: 1 },
-              connectgaps: false
-            }
-            self.extractIonCurrentData.push(extractIonCurrentTrace)
-          }
+      // 监听update-bpc更新事件
+      eventSource.addEventListener('update-bpc', function (event) {
+        const val = JSON.parse(event.data)
+        let bpcTrace = {
+          name: val.sample,
+          mode: 'lines',
+          x: val.rt,
+          y: val.intensity,
+          line: { width: 1 }
         }
-      }).catch(failResp => {
-        console.log(failResp)
+        self.basePeakCurrentData.push(bpcTrace)
+        self.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+      })
+
+      // 监听update-tic更新事件
+      eventSource.addEventListener('update-tic', function (event) {
+        const val = JSON.parse(event.data)
+        let ticTrace = {
+          name: val.sample,
+          x: val.rt,
+          y: val.tic,
+          line: { width: 1 }
+        }
+        self.totalIonCurrentData.push(ticTrace)
+        self.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+      })
+
+      // 监听update-eic更新事件
+      eventSource.addEventListener('update-eic', function (event) {
+        const val = JSON.parse(event.data)
+        self.extractIonCurrentData = []
+        for (let i = 0; i < val.length; i++) {
+          let extractIonCurrentTrace = {
+            name: val[i].landmark,
+            x: val[i].rt,
+            y: val[i].intensity,
+            mode: 'lines',
+            line: { width: 1 },
+            marker: { size: 1 },
+            connectgaps: false
+          }
+          self.extractIonCurrentData.push(extractIonCurrentTrace)
+        }
+        self.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
+      })
+
+      // 监听update-landmark-data事件
+      eventSource.addEventListener('update-landmark-data', function (event) {
+        const val = JSON.parse(event.data)
+
+        self.landmarkRtData = []
+        for (let i = 0; i < val.length; i++) {
+          let option = self.panelOptions.landmarkRt
+          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+          let trace = {
+            name: val[i].landmark,
+            mode: 'lines+markers',
+            x: val[i].index,
+            y: val[i].rt,
+            line: { width: option.lineWidth },
+            marker: { symbol: symbol, size: size, color: color },
+            text: val[i].sample,
+            sampleName: val[i].sample,
+            hovertemplate: 'sample: %{text}<br>value: %{y}'
+          }
+          self.landmarkRtData.push(trace)
+        }
+
+        self.landmarkIntensityData = []
+        for (let i = 0; i < val.length; i++) {
+          let option = self.panelOptions.landmarkIntensity
+          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+          let trace = {
+            name: val[i].landmark,
+            mode: 'lines+markers',
+            x: val[i].index,
+            y: val[i].intensity,
+            line: { width: option.lineWidth },
+            marker: { symbol: symbol, size: size, color: color },
+            text: val[i].sample,
+            sampleName: val[i].sample,
+            hovertemplate: 'sample: %{text}<br>value: %{y}'
+          }
+          self.landmarkIntensityData.push(trace)
+        }
+
+        self.landmarkRelMzErrorData = []
+        for (let i = 0; i < val.length; i++) {
+          let option = self.panelOptions.landmarkRelMzError
+          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+          let trace = {
+            name: val[i].landmark,
+            mode: 'lines+markers',
+            x: val[i].index,
+            y: val[i].relMzError,
+            line: { width: option.lineWidth },
+            marker: { symbol: symbol, size: size, color: color },
+            text: val[i].sample,
+            sampleName: val[i].sample,
+            hovertemplate: 'sample: %{text}<br>value: %{y}'
+          }
+          self.landmarkRelMzErrorData.push(trace)
+        }
+
+        self.landmarkAbsMzErrorData = []
+        for (let i = 0; i < val.length; i++) {
+          let option = self.panelOptions.landmarkAbsMzError
+          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+          let trace = {
+            name: val[i].landmark,
+            mode: 'lines+markers',
+            x: val[i].index,
+            y: val[i].absMzError,
+            line: { width: option.lineWidth },
+            marker: { symbol: symbol, size: size, color: color },
+            text: val[i].sample,
+            sampleName: val[i].sample,
+            hovertemplate: 'sample: %{text}<br>value: %{y}'
+          }
+          self.landmarkAbsMzErrorData.push(trace)
+        }
+
+        self.landmarkPeakAreaData = []
+        for (let i = 0; i < val.length; i++) {
+          let option = self.panelOptions.landmarkPeakArea
+          let symbol = val[i].sample.map(name => self.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
+          let size = val[i].sample.map(name => self.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
+          let color = val[i].sample.map(name => self.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
+          let trace = {
+            name: val[i].landmark,
+            mode: 'lines+markers',
+            x: val[i].index,
+            y: val[i].peakArea,
+            line: { width: option.lineWidth },
+            marker: { symbol: symbol, size: size, color: color },
+            text: val[i].sample,
+            sampleName: val[i].sample,
+            hovertemplate: 'sample: %{text}<br>value: %{y}'
+          }
+          self.landmarkPeakAreaData.push(trace)
+        }
+
+        self.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
       })
     },
     refreshData (data, options) {
@@ -1693,6 +1625,13 @@ export default {
         if (symbolColor.length > 0) {
           data[i].marker.color = symbolColor
         }
+      }
+    },
+    isQC (name) {
+      if (name.indexOf('QC') === -1 && name.indexOf('qc') === -1) {
+        return false
+      } else {
+        return true
       }
     },
     /**
@@ -2041,7 +1980,7 @@ export default {
           this.selectedLandmarkRtData[k].y = this.selectedLandmarkRtData[k].y.slice(this.selectedLandmarkRtData[k].y.length - lastN)
         }
       }
-      this.renderWLQL(this.selectedLandmarkRtData, 'landmarkRt', this.landmarkRtPanelOptions)
+      this.renderWLQL(this.selectedLandmarkRtData, 'landmarkRt', this.panelOptions.landmarkRt)
     },
     /**
      * 过滤landmark intensity data
@@ -2060,7 +1999,7 @@ export default {
           }
         }
       }
-      this.renderWLQL(this.selectedLandmarkIntensityData, 'landmarkIntensity', this.landmarkIntensityPanelOptions)
+      this.renderWLQL(this.selectedLandmarkIntensityData, 'landmarkIntensity', this.panelOptions.landmarkIntensity)
     },
     /**
      * 过滤landmark relative m/z error
@@ -2079,7 +2018,7 @@ export default {
           }
         }
       }
-      this.renderWLQL(this.selectedLandmarkRelMzErrorData, 'landmarkRelMzError', this.landmarkRelMzErrorPanelOptions)
+      this.renderWLQL(this.selectedLandmarkRelMzErrorData, 'landmarkRelMzError', this.panelOptions.landmarkRelMzError)
     },
     /**
      * 过滤landmark absolute m/z error
@@ -2098,7 +2037,26 @@ export default {
           }
         }
       }
-      this.renderWLQL(this.selectedLandmarkAbsMzErrorData, 'landmarkAbsMzError', this.landmarkAbsMzErrorPanelOptions)
+      this.renderWLQL(this.selectedLandmarkAbsMzErrorData, 'landmarkAbsMzError', this.panelOptions.landmarkAbsMzError)
+    },
+    /**
+     * 过滤landmark peak area
+     * @param {} name name of landmark
+     */
+    filterLandmarkPeakAreaData (name) {
+      this.selectedLandmarkOfPeakArea = name
+      this.panelTitleOfPeakArea = this.updatePanelTitle(this.panelTitleOfPeakArea, name)
+      if (name.startsWith('All')) {
+        this.selectedLandmarkPeakAreaData = this.landmarkPeakAreaData
+      } else {
+        for (var i = 0; i < this.landmarkPeakAreaData.length; i++) {
+          if (this.landmarkPeakAreaData[i].name === name) {
+            this.selectedLandmarkPeakAreaData = [this.landmarkPeakAreaData[i]]
+            break
+          }
+        }
+      }
+      this.renderWLQL(this.selectedLandmarkPeakAreaData, 'landmarkPeakArea', this.panelOptions.landmarkPeakArea)
     },
     /**
      * 全局过滤 last n 个样本数据进行展示
@@ -2112,6 +2070,7 @@ export default {
       this.filterLandmarkIntensityData(this.selectedLandmarkOfIntensity, option.value)
       this.filterLandmarkAbsMzErrorData(this.selectedLandmarkOfAbsMzError, option.value)
       this.filterLandmarkRelMzErrorData(this.selectedLandmarkOfRelMzError, option.value)
+      this.filterLandmarkPeakAreaData(this.selectedLandmarkOfPeakArea, option.value)
     },
     filterLandmarks (name) {
       this.selectedLandmark = name
@@ -2119,6 +2078,7 @@ export default {
       this.filterLandmarkIntensityData(name)
       this.filterLandmarkRelMzErrorData(name)
       this.filterLandmarkAbsMzErrorData(name)
+      this.filterLandmarkPeakAreaData(name)
     },
     /**
      * 所有Panel下拉选项的总控
@@ -2217,32 +2177,38 @@ export default {
         this.detailPanelTitle = this.panelTitleOfAbsMzError
       } else if (command === 'viewLandmarkPeakArea') {
         this.router = { path: 'detail', type: 'landmarkPeakArea' }
+        this.detailPanelData = this.selectedLandmarkPeakAreaData
+        this.detailPanelTitle = this.panelTitleOfPeakArea
       } else if (command === 'editLandmarkRt') {
         this.router = { path: 'editor', type: 'landmarkRt' }
         this.editorPanelData = this.selectedLandmarkRtData
         this.editorPanelTitle = this.panelTitleOfRT
-        this.editorPanelOptions = this.landmarkRtPanelOptions
+        this.editorPanelOptions = this.panelOptions.landmarkRt
         this.renderWLQL(this.editorPanelData, 'landmarkRt', this.editorPanelOptions)
       } else if (command === 'editLandmarkIntensity') {
         this.router = { path: 'editor', type: 'landmarkIntensity' }
         this.editorPanelData = this.selectedLandmarkIntensityData
         this.editorPanelTitle = this.panelTitleOfIntensity
-        this.editorPanelOptions = this.landmarkIntensityPanelOptions
+        this.editorPanelOptions = this.panelOptions.landmarkIntensity
         this.renderWLQL(this.editorPanelData, 'landmarkIntensity', this.editorPanelOptions)
       } else if (command === 'editLandmarkRelMzError') {
         this.router = { path: 'editor', type: 'landmarkRelMzError' }
         this.editorPanelData = this.selectedLandmarkRelMzErrorData
         this.editorPanelTitle = this.panelTitleOfRelMzError
-        this.editorPanelOptions = this.landmarkRelMzErrorPanelOptions
+        this.editorPanelOptions = this.panelOptions.landmarkRelMzError
         this.renderWLQL(this.editorPanelData, 'landmarkRelMzError', this.editorPanelOptions)
       } else if (command === 'editLandmarkAbsMzError') {
         this.router = { path: 'editor', type: 'landmarkAbsMzError' }
         this.editorPanelData = this.selectedLandmarkAbsMzErrorData
         this.editorPanelTitle = this.panelTitleOfAbsMzError
-        this.editorPanelOptions = this.landmarkAbsMzErrorPanelOptions
+        this.editorPanelOptions = this.panelOptions.landmarkAbsMzError
         this.renderWLQL(this.editorPanelData, 'landmarkAbsMzError', this.editorPanelOptions)
       } else if (command === 'editLandmarkPeakArea') {
         this.router = { path: 'editor', type: 'landmarkPeakArea' }
+        this.editorPanelData = this.selectedLandmarkPeakAreaData
+        this.editorPanelTitle = this.panelTitleOfPeakArea
+        this.editorPanelOptions = this.panelOptions.landmarkPeakArea
+        this.renderWLQL(this.editorPanelData, 'landmarkPeakArea', this.editorPanelOptions)
       }
     },
     handleDropdownOfDetailPanel (command) {
@@ -2277,6 +2243,9 @@ export default {
       } else if (this.router.type === 'landmarkAbsMzError') {
         this.filterLandmarkAbsMzErrorData(name)
         this.detailPanelData = this.selectedLandmarkAbsMzErrorData
+      } else if (this.router.type === 'landmarkPeakArea') {
+        this.filterLandmarkPeakAreaData(name)
+        this.detailPanelData = this.selectedLandmarkPeakAreaData
       }
     },
     /**
@@ -2300,6 +2269,9 @@ export default {
       } else if (this.router.type === 'landmarkAbsMzError') {
         this.filterLandmarkAbsMzErrorData(name)
         this.editorPanelData = this.selectedLandmarkAbsMzErrorData
+      } else if (this.router.type === 'landmarkPeakArea') {
+        this.filterLandmarkPeakAreaData(name)
+        this.editorPanelData = this.selectedLandmarkPeakAreaData
       }
       this.renderWLQL(this.editorPanelData, this.router.type, this.editorPanelOptions)
     },
@@ -2332,7 +2304,7 @@ export default {
           bql = median + options.BQL
           uwl = median + options.UWL
           bwl = median + options.BWL
-        } else if (type === 'landmarkIntensity' || type === 'landmarkArea') {
+        } else if (type === 'landmarkIntensity' || type === 'landmarkPeakArea') {
           uql = median + options.UQL * stdev
           bql = median + options.BQL * stdev
           uwl = median + options.UWL * stdev
@@ -2455,55 +2427,44 @@ export default {
     onDBClickSample (name) {
       this.filterIonCurrentData('All data')
     },
-    /**
-     * 保存工作空间
-     */
-    onSaveWorkspace () {
-      // save grid layout
+    onSaveProject () {
+      this.saveGridLayout()
+      this.savePanelOptions('default')
+      this.saveProject()
+      this.saveProjectDialogVisible = false
+    },
+    onOpenRecentProjects () {
+      this.openProjectDrawerVisible = true
+      this.getAllProjects()
+    },
+    getAllProjects () {
+      var self = this
       this.axios({
-        method: 'put',
-        url: API_BASE + '/gridlayout',
-        data: {
-          id: '0001',
-          name: this.workspace.name,
-          layout: JSON.stringify(this.gridLayout)
-        }
+        method: 'get',
+        url: API_BASE + '/project'
       }).then(successResp => {
-        if (successResp.data.code !== 200) {
-          this.$notify({
-            title: 'Workspace saving failure, please try again later.',
-            type: 'warning'
-          })
+        if (successResp.data.code === 200) {
+          self.projects = successResp.data.data
         }
       }).catch(failResp => {
         console.log(failResp)
-        this.$notify({
-          title: 'Workspace saving failure, please try again later.',
-          type: 'warning'
-        })
       })
-      // save data
+    },
+    openProject (id) {
+      console.log(id)
+    },
+    deleteProject (row) {
+      var self = this
       this.axios({
-        method: 'put',
-        url: API_BASE + '/workspace',
-        data: {
-          name: this.workspace.name,
-          monitorPath: this.monitorTask.monitorPath,
-          monitorFiles: this.monitorTask.monitorFiles
-        }
+        method: 'delete',
+        url: API_BASE + `/project/${row.id}`
       }).then(successResp => {
-        this.$notify({
-          title: 'Workspace saved',
-          type: 'success'
-        })
+        if (successResp.data.code === 200) {
+          self.projects.splice(row.$index, 1)
+        }
       }).catch(failResp => {
         console.log(failResp)
-        this.$notify({
-          title: 'Workspace saving failure',
-          type: 'warning'
-        })
       })
-      this.saveWorkspaceDialogVisible = false
     },
     /**
      * 加载布局
@@ -2520,6 +2481,96 @@ export default {
         }
       }).catch(failResp => {
         console.log(failResp)
+      })
+    },
+    saveGridLayout () {
+      this.axios({
+        method: 'put',
+        url: API_BASE + '/gridlayout',
+        data: {
+          id: '0001',
+          name: this.project.name,
+          layout: JSON.stringify(this.gridLayout)
+        }
+      }).then(successResp => {
+        if (successResp.data.code !== 200) {
+          this.$notify({
+            title: 'Project saving failure, please try again later.',
+            type: 'warning'
+          })
+        }
+      }).catch(failResp => {
+        console.log(failResp)
+        this.$notify({
+          title: 'Project saving failure, please try again later.',
+          type: 'warning'
+        })
+      })
+    },
+    /**
+     * 加载panel设置
+     */
+    loadPanelOptions (id) {
+      var self = this
+      this.axios({
+        method: 'get',
+        url: API_BASE + `/paneloptions/${id}`
+      }).then(successResp => {
+        if (successResp.data.code === 200) {
+          const options = JSON.parse(successResp.data.data.options)
+          self.panelOptions.landmarkRt = options.landmarkRt
+          self.panelOptions.landmarkIntensity = options.landmarkIntensity
+          self.panelOptions.landmarkRelMzError = options.landmarkRelMzError
+          self.panelOptions.landmarkAbsMzError = options.landmarkAbsMzError
+          self.panelOptions.landmarkPeakArea = options.landmarkPeakArea
+        }
+      }).catch(failResp => {
+        console.log(failResp)
+      })
+    },
+    savePanelOptions (id) {
+      this.axios({
+        method: 'put',
+        url: API_BASE + `/paneloptions`,
+        data: {
+          id: id,
+          options: JSON.stringify(this.panelOptions)
+        }
+      }).then(successResp => {
+        if (successResp.data.code !== 200) {
+          this.$notify({
+            title: 'Project saving failure, please try again later.',
+            type: 'warning'
+          })
+        }
+      }).catch(failResp => {
+        console.log(failResp)
+        this.$notify({
+          title: 'Project saving failure, please try again later.',
+          type: 'warning'
+        })
+      })
+    },
+    saveProject () {
+      this.axios({
+        method: 'put',
+        url: API_BASE + `/project/${this.monitorTask.taskId}`,
+        data: {
+          name: this.project.name
+        }
+      }).then(successResp => {
+        if (successResp.data.code !== 200) {
+          this.$notify({
+            title: 'Project saving failure, please try again later.',
+            type: 'warning'
+          })
+        }
+      }).catch(failResp => {
+        console.log(failResp)
+        this.$notify({
+          title: 'Project saving failure, please try again later.',
+          type: 'warning'
+        })
       })
     },
     /**
@@ -2559,6 +2610,11 @@ export default {
         // 模拟点击下载链接，执行下载操作
         downloadLink.click()
       })
+    },
+    projectRowClassName ({row, rowIndex}) {
+      if (row.status === 'running') {
+        return 'project-running-row'
+      }
     }
   }
 }
@@ -2717,12 +2773,13 @@ fieldset {
   height: 32px;
   display: flex;
   align-items: center;
+  display: flex !important;
 }
 
 .toolbar-button:hover {
-  color: rgba(36, 41, 46, 1);
-  background-color: rgb(244, 245, 245);
-  border: 1px solid rgb(219, 220, 221);
+  color: rgba(36, 41, 46, 1) !important;
+  background-color: rgb(244, 245, 245) !important;
+  border: 1px solid rgb(219, 220, 221) !important;
 }
 
 .plus-button {
@@ -2810,6 +2867,71 @@ fieldset {
 
 .el-switch.is-checked .el-switch__core::after {
   margin-left: -14px;
+}
+
+.el-drawer__header {
+  color: rgb(36, 41, 46) !important;
+  font-size: 18px;
+  margin-bottom: 16px !important;
+}
+
+.el-drawer__body {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+#table-projects {
+  border: 2px solid #0f84af;
+}
+
+#table-projects > div.el-table {
+  border: none !important;
+}
+
+#table-projects table thead tr > th {
+  background: #397093 !important;
+  color: white !important;
+}
+
+#table-projects table tr > td  {
+  background: #b0e0e6 !important;
+  color: black !important;
+  padding: 4px 0;
+}
+
+#table-projects tr.el-table__row.project-running-row > td {
+  background-color: #6a5acd !important;
+  color: white !important;
+  padding: 4px 0;
+}
+
+.simple-btn {
+  color: rgba(36, 41, 46, 0.75) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+.el-icon-folder-opened {
+  color: rgba(36, 41, 46, 0.75) !important;
+  font-weight: 600 !important;
+}
+
+.el-input.is-active .el-input__inner, .el-input__inner:focus {
+  border-color: #3871dc !important;
+  border-width: 2px !important;
+}
+
+button.primary-btn.el-button.el-button--primary {
+  background-color: #3871dc !important;
+  border-color: #3871dc !important;
+}
+.el-button.primary-btn.el-button--primary:hover {
+  background-color: #2c5ab0 !important;
+  border-color: #2c5ab0 !important;
+}
+
+.monitor-dialog .el-dialog__body {
+  max-height: 400px !important;
 }
 </style>
 
@@ -3090,7 +3212,7 @@ fieldset {
   transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1) !important;
 }
 
-.start-button {
+.primary-button {
   color: white;
   background-color: #3871dc;
   border: 1px solid transparent;
@@ -3100,11 +3222,12 @@ fieldset {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
-.start-button:hover {
+.primary-button:hover {
   background-color: #2c5ab0;
+  color: white;
 }
 
-.stop-button {
+.danger-button {
   color: white;
   background-color: #e0226e;
   border: 1px solid transparent;
@@ -3114,7 +3237,15 @@ fieldset {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
-.stop-button:hover {
+.danger-button:hover {
   background-color: #b31b58;
+  color: white;
+}
+
+.divider-line {
+  border-top: 1px solid rgba(36, 41, 46, 0.5);
+  margin-top: 5px;
+  margin-bottom: 20px;
+  width: 100%;
 }
 </style>

@@ -7,11 +7,14 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "grid_layout")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class GridLayoutEntity {
 
 	@Id

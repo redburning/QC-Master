@@ -26,10 +26,10 @@ public class GridLayoutController {
 	public Result addOrUpdateLayout(@RequestBody GridLayoutEntity layout) {
 		try {
 			GridLayoutEntity savedLandmark = layoutService.saveOrUpdateLayout(layout);
-			return new Result(200, "success", savedLandmark);
+			return Result.success(savedLandmark);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(510, "fail", e.getMessage());
+			return Result.error(e.getMessage());
 		}
 	}
 	
@@ -37,10 +37,10 @@ public class GridLayoutController {
 	public Result getAllLayout() {
 		try {
 			List<GridLayoutEntity> layouts = layoutService.getAllLayout();
-			return new Result(200, "success", layouts);
+			return Result.success(layouts);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(411, "fail", e.getMessage());
+			return Result.error(e.getMessage());
 		}
 	}
 	
@@ -48,10 +48,10 @@ public class GridLayoutController {
 	public Result getLayout(@PathVariable(value = "id") String id) {
 		try {
 			GridLayoutEntity layout = layoutService.getLayout(id);
-			return new Result(200, "success", layout.getLayout());
+			return Result.success(layout.getLayout());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(411, "fail", e.getMessage());
+			return Result.error(e.getMessage());
 		}
 	}
 	

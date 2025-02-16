@@ -40,10 +40,10 @@ public class LandmarkController {
 	public Result addOrUpdateLandmark(@RequestBody LandmarkEntity landmark) {
 		try {
 			LandmarkEntity savedLandmark = landmarkService.saveOrUpdateLandmark(landmark);
-			return new Result(200, "success", savedLandmark);
+			return Result.success(savedLandmark);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(410, "fail", e.getMessage());
+			return Result.error(e.getMessage());
 		}
 	}
 	
@@ -51,10 +51,10 @@ public class LandmarkController {
 	public Result getAllLandmarks() {
 		try {
 			List<LandmarkEntity> landmarks = landmarkService.getAllLandmarks();
-			return new Result(200, "success", landmarks);
+			return Result.success(landmarks);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(411, "fail", e.getMessage());
+			return Result.error(e.getMessage());
 		}
 	}
 	

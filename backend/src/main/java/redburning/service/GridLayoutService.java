@@ -2,16 +2,33 @@ package redburning.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import redburning.entity.GridLayoutEntity;
+import redburning.repository.LayoutRepository;
 
-public interface GridLayoutService {
+@Service
+public class GridLayoutService {
 
-	public GridLayoutEntity saveOrUpdateLayout(GridLayoutEntity layoutEntity);
+	@Autowired
+	private LayoutRepository layoutRepository;
 	
-	public List<GridLayoutEntity> getAllLayout();
-	
-	public GridLayoutEntity getLayout(String id);
-	
-	public void removeLayout(String id);
-	
+	public GridLayoutEntity saveOrUpdateLayout(GridLayoutEntity layoutEntity) {
+		GridLayoutEntity saved = layoutRepository.save(layoutEntity);
+		return saved;
+	}
+
+	public List<GridLayoutEntity> getAllLayout() {
+		return layoutRepository.findAll();
+	}
+
+	public void removeLayout(String id) {
+		layoutRepository.deleteById(id);
+	}
+
+	public GridLayoutEntity getLayout(String id) {
+		return layoutRepository.getOne(id);
+	}
+
 }

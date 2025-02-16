@@ -2,18 +2,38 @@ package redburning.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import redburning.entity.LandmarkEntity;
+import redburning.repository.LandmarkRepository;
 
-public interface LandmarkService {
+@Service
+public class LandmarkService {
 
-	public LandmarkEntity saveOrUpdateLandmark(LandmarkEntity landmark);
+	@Autowired
+	private LandmarkRepository landmarkRepository;
 	
-	public List<LandmarkEntity> getAllLandmarks();
+	public LandmarkEntity saveOrUpdateLandmark(LandmarkEntity landmark) {
+		LandmarkEntity savedEntity = landmarkRepository.save(landmark);
+		return savedEntity;
+	}
+
+	public List<LandmarkEntity> getAllLandmarks() {
+		return landmarkRepository.findAll();
+	}
+
+	public void removeLandmark(String id) {
+		landmarkRepository.deleteById(id);
+	}
+
+	public void removeAllLandmarks() {
+		landmarkRepository.deleteAll();
+	}
 	
-	public void removeLandmark(String id);
-	
-	public void removeAllLandmarks();
-	
-	public LandmarkEntity addOrUpdateLandmark(LandmarkEntity landmark);
-	
+	public LandmarkEntity addOrUpdateLandmark(LandmarkEntity landmark) {
+		LandmarkEntity savedLandmark = landmarkRepository.save(landmark);
+		return savedLandmark;
+	}
+
 }
