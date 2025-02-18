@@ -1,9 +1,10 @@
 <template>
-  <div style="display: flex; gap: 0px;" @click="collapseSampleSelectionDropdownMenu=false; collapseLandmarkSelectionDropdownMenu=false">
-    <div :style="{ width: layout.sidebar.width + 'px', height: layout.sidebar.height + 'px' }" style="border-right:1px solid rgba(36, 41, 46, 0.12)"
-      v-show="viewMode==='default'">
-      <img src="@/assets/imgs/logo.png" height="40px" style="padding-left: 5px; padding-top: 5px;">
-      <div id="progress" class="sample-list-container">
+  <div style="display: flex; gap: 0px;" @click="collapseLandmarkSelectionDropdownMenu=false">
+    <div id="sidebar" :style="{ width: layout.sidebar.width + 'px', height: layout.sidebar.height + 'px' }" class="sidebar" v-show="viewMode==='default'">
+      <div class="logo">
+        <img src="@/assets/imgs/logo.png" height="40px" :class="{ monitoring: monitorTask.monitoring }">
+      </div>
+      <div id="progress" class="sample-list-container" v-loading="loadingMonitorSamples" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
         <ul style="list-style-type:none; padding-left:5px; margin-top: 0px;">
           <li v-for="(sample, index) in monitorTask.monitorSamples" :key="sample" style="display: flex;"
             :class="{ 'sample-list-item': sample.indexOf('QC') === -1, 'sample-list-item-qc': sample.indexOf('QC') !== -1 }">
@@ -16,12 +17,13 @@
           </li>
         </ul>
       </div>
+      <div id="resize" class="resize"></div>
     </div>
-    <div style="background-color: #f4f5f5;">
+    <div id="main-container">
       <div v-show="viewMode!=='hideHeader'" style="display:flex; justify-content:space-between; align-items:center; padding:10px; box-sizing: border-box;"
         :style="{ height: layout.header.height + 'px', width: layout.header.width + 'px' }">
         <div>
-          <el-input v-model="monitorTask.monitorPath" size="small" style="width:500px;" :class="{ monitoring: monitorTask.monitoring }">
+          <el-input v-model="monitorTask.monitorPath" size="small" style="width:500px;">
             <template slot="prepend">
               <el-button type="primary" size="small" icon="el-icon-folder-opened" @click="loadMonitorDirTree" class="simple-btn">Browse</el-button>
             </template>
@@ -58,40 +60,6 @@
               </span>
             </el-button>
           </el-tooltip>
-
-          <div style="position: relative;">
-            <el-button size="small" class="toolbar-button" style="padding: 2px 8px;" @click.stop="collapseSampleSelectionDropdownMenu = !collapseSampleSelectionDropdownMenu">
-              <div style="display: flex; align-items: center;">
-                <div>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117.8 64" width="24" height="24" class="css-eyx4do"><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="96.44" y1="83.7" x2="96.44" y2="-9.48"><stop offset="0" stop-color="#FFF23A"></stop><stop offset=".04" stop-color="#FEE62D"></stop><stop offset=".12" stop-color="#FED41A"></stop><stop offset=".2" stop-color="#FDC90F"></stop><stop offset=".28" stop-color="#FDC60B"></stop><stop offset=".67" stop-color="#F28F3F"></stop><stop offset=".89" stop-color="#ED693C"></stop><stop offset="1" stop-color="#E83E39"></stop></linearGradient><path d="M15.2 22.7H1.9c-1.1 0-1.9.9-1.9 1.9v37.5C0 63.2.9 64 1.9 64h13.3c1.1 0 1.9-.9 1.9-1.9V24.6c0-1.1-.8-1.9-1.9-1.9zM36.3 10.2H23c-1.1 0-1.9.9-1.9 1.9v50c0 1.1.9 1.9 1.9 1.9h13.3c1.1 0 1.9-.9 1.9-1.9v-50c0-1-.9-1.9-1.9-1.9zM57.3 32H44c-1.1 0-1.9.9-1.9 1.9V62c0 1.1.9 1.9 1.9 1.9h13.3c1.1 0 1.9-.9 1.9-1.9V34c0-1.1-.8-2-1.9-2zM70.1 38V26.1c0-3.4 2.7-6.1 6.1-6.1h4.1V2c0-1.1-.9-1.9-1.9-1.9H65.1c-1.1-.1-2 .8-2 1.9v60.1c0 1.1.9 1.9 1.9 1.9h13.3c1.1 0 1.9-.9 1.9-1.9v-18h-4.1c-3.2 0-6-2.8-6-6.1z"></path><path fill="url(#a)" d="M116.7 24.9H103.6V11.8c0-.6-.5-1.1-1.1-1.1h-12c-.6 0-1.1.5-1.1 1.1v13.1H76.2c-.6 0-1.1.5-1.1 1.1v12c0 .6.5 1.1 1.1 1.1h13.2v13.2c0 .6.5 1.1 1.1 1.1h11.9c.6 0 1.1-.5 1.1-1.1V39.1h13.1c.6 0 1.1-.5 1.1-1.1V26.1c.1-.6-.4-1.2-1-1.2z"></path></svg>
-                </div>
-                <div style="padding-left:8px; padding-right:4px;">
-                  <span style="font-size: 13px; font-weight: 600; color:rgba(36, 41, 46, 0.75)">
-                    <span>{{ selectedLastNSamples.label }}</span>
-                  </span>
-                </div>
-                <div>
-                  <svg v-show="!collapseSampleSelectionDropdownMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-eyx4do">
-                    <path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"></path>
-                  </svg>
-                  <svg v-show="collapseSampleSelectionDropdownMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-ovd6k">
-                    <path d="M17,13.41,12.71,9.17a1,1,0,0,0-1.42,0L7.05,13.41a1,1,0,0,0,0,1.42,1,1,0,0,0,1.41,0L12,11.29l3.54,3.54a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29A1,1,0,0,0,17,13.41Z"></path>
-                  </svg>
-                </div>
-              </div>
-            </el-button>
-            <div class="dropdown-menu-list" v-show="collapseSampleSelectionDropdownMenu">
-              <div style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0px; max-height: 100%;">
-                <div class="scrollbar-view" style="position: relative; overflow: scroll; margin-right: -8px; margin-bottom: -8px; max-height: calc(100% + 8px);">
-                  <ul style="list-style-type:none; padding-left: 0px; margin-top: 5px; margin-bottom: 5px;">
-                    <li v-for="option in sampleDropdownMenuOptions" :key="option.label" class="dropdown-menu-list-item">
-                      <el-button @click="filterLastNSamples(option)" class="dropdown-menu-list-item-button">{{ option.label }}</el-button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <div style="position: relative;">
             <el-button size="small" class="toolbar-button" style="padding: 2px 8px;" @click.stop="collapseLandmarkSelectionDropdownMenu = !collapseLandmarkSelectionDropdownMenu">
@@ -144,7 +112,7 @@
         <grid-layout :layout.sync="gridLayout" :col-num="48" :row-height="gridRowHeight" :is-draggable="true" :is-resizable="true" :is-mirrored="false"
           :vertical-compact="true" :margin="[10, 10]" :use-css-transforms="true">
           <grid-item v-for="item in gridLayout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @resize="resizePanel" drag-allow-from=".vue-draggable-handle" drag-ignore-from=".no-drag">
-            <div v-if="item.i === 0">
+            <div v-if="item.i === 0" v-loading="loadingIonCurrentData" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
               <div class="panelToolsBar vue-draggable-handle">
                 <el-dropdown trigger="click" @command="handleDropdownOfPanel">
                   <span>{{ currentChromatogram }}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -213,7 +181,7 @@
                 <vue-plotly :data="ionCurrentData" :layout="ionCurrentLayout" :options="defaultPlotOptions" style="height: calc(100% - 40px);"></vue-plotly>
               </div>
             </div>
-            <div v-if="item.i === 1">
+            <div v-if="item.i === 1" v-loading="loadingLandmarkRtData" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
               <div class="panelToolsBar vue-draggable-handle">
                 <el-dropdown trigger="click" @command="handleDropdownOfPanel">
                   <span>{{ panelTitleOfRT }}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -257,7 +225,7 @@
                 <vue-plotly :data="selectedLandmarkRtData" :layout="landmarkRtLayout" :options="defaultPlotOptions" style="height: calc(100% - 40px);"></vue-plotly>
               </div>
             </div>
-            <div v-if="item.i === 2">
+            <div v-if="item.i === 2" v-loading="loadingLandmarkIntensityData" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
               <div class="panelToolsBar vue-draggable-handle">
                 <el-dropdown trigger="click" @command="handleDropdownOfPanel">
                   <span>{{ panelTitleOfIntensity }}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -301,7 +269,7 @@
                 <vue-plotly :data="selectedLandmarkIntensityData" :layout="landmarkIntensityLayout" :options="defaultPlotOptions" style="height: calc(100% - 40px);"></vue-plotly>
               </div>
             </div>
-            <div v-if="item.i === 3">
+            <div v-if="item.i === 3" v-loading="loadingLandmarkRelMzErrorData" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
               <div class="panelToolsBar vue-draggable-handle">
                 <el-dropdown trigger="click" @command="handleDropdownOfPanel">
                   <span>{{ panelTitleOfRelMzError }}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -345,7 +313,7 @@
                 <vue-plotly :data="selectedLandmarkRelMzErrorData" :layout="landmarkRelMzErrorLayout" :options="defaultPlotOptions" style="height: calc(100% - 40px);"></vue-plotly>
               </div>
             </div>
-            <div v-if="item.i === 4">
+            <div v-if="item.i === 4" v-loading="loadingLandmarkAbsMzErrorData" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
               <div class="panelToolsBar vue-draggable-handle">
                 <el-dropdown trigger="click" @command="handleDropdownOfPanel">
                   <span>{{ panelTitleOfAbsMzError }}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -389,7 +357,7 @@
                 <vue-plotly :data="selectedLandmarkAbsMzErrorData" :layout="landmarkAbsMzErrorLayout" :options="defaultPlotOptions" style="height: calc(100% - 40px);"></vue-plotly>
               </div>
             </div>
-            <div v-if="item.i === 5">
+            <div v-if="item.i === 5" v-loading="loadingLandmarkPeakAreaData" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
               <div class="panelToolsBar vue-draggable-handle">
                 <el-dropdown trigger="click" @command="handleDropdownOfPanel">
                   <span>{{ panelTitleOfPeakArea }}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -776,7 +744,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="settings" :visible.sync="settingDialogVisible" custom-class="custom-dilaog" width="800px">
+    <el-dialog title="Settings" :visible.sync="settingDialogVisible" custom-class="custom-dilaog" width="800px">
       <el-tabs type="border-card">
         <el-tab-pane label="Basic">
           <el-form ref="peakExtractionForm" :model="peakExtractionForm" label-position="right" label-width="80px">
@@ -929,8 +897,8 @@ import html2canvas from 'html2canvas'
 // 生产环境
 const API_BASE = ''
 
+var SIDEBAR_WIDTH = 150
 const HEADER_HEIGHT = 70
-const SIDEBAR_WIDTH = 150
 const EDITOR_WIDTH = 300
 
 export default {
@@ -962,6 +930,14 @@ export default {
       landmarkRelMzErrorData: [],
       landmarkAbsMzErrorData: [],
       landmarkPeakAreaData: [],
+      // loading flag
+      loadingMonitorSamples: false,
+      loadingIonCurrentData: false,
+      loadingLandmarkRtData: false,
+      loadingLandmarkIntensityData: false,
+      loadingLandmarkRelMzErrorData: false,
+      loadingLandmarkAbsMzErrorData: false,
+      loadingLandmarkPeakAreaData: false,
       // panel title
       currentChromatogram: 'Base Peak Chromatogram',
       switchChromatogram1: 'Total Ion Chromatogram',
@@ -1170,11 +1146,7 @@ export default {
       collapseEditArea: false,
       collapseBasicPanelOptions: false,
       collapseAdvancedPanelOptions: false,
-      collapseSampleSelectionDropdownMenu: false,
       collapseLandmarkSelectionDropdownMenu: false,
-      selectedLastNSamples: { label: 'All samples', value: 'All samples' },
-      sampleDropdownMenuOptions: [ { label: 'All samples', value: 'All samples' }, { label: 'Last 20 samples', value: 20 }, { label: 'Last 50 samples', value: 50 },
-        { label: 'Last 100 samples', value: 100 }, { label: 'Last 200 samples', value: 200 }, { label: 'Last 500 samples', value: 500 }],
       selectedLandmark: 'All landmarks',
       // project
       saveProjectDialogVisible: false,
@@ -1186,7 +1158,7 @@ export default {
     }
   },
   mounted () {
-    // this.loadMonitorDirTree()
+    this.initResizeControl()
     this.loadLandmarks()
     this.loadGridLayout()
     this.loadPanelOptions('default')
@@ -1202,44 +1174,15 @@ export default {
         }
       }
     })
+    this.initLayout()
 
-    // initial layout
-    this.layout.header.height = HEADER_HEIGHT
-    this.layout.header.width = document.body.clientWidth - SIDEBAR_WIDTH
-    this.layout.sidebar.height = document.body.clientHeight
-    this.layout.sidebar.width = SIDEBAR_WIDTH
-    this.layout.main.height = document.body.clientHeight - HEADER_HEIGHT
-    this.layout.main.width = document.body.clientWidth - SIDEBAR_WIDTH
-    this.layout.panel.height = (document.body.clientHeight - HEADER_HEIGHT - 10) / 2 - 40
-    this.layout.panel.width = (document.body.clientWidth - SIDEBAR_WIDTH - 40) / 3
-    this.ionCurrentLayout.height = this.layout.panel.height
-    this.ionCurrentLayout.width = this.layout.panel.width
-    this.landmarkRtLayout.height = this.layout.panel.height
-    this.landmarkRtLayout.width = this.layout.panel.width
-    this.landmarkIntensityLayout.height = this.layout.panel.height
-    this.landmarkIntensityLayout.width = this.layout.panel.width
-    this.landmarkRelMzErrorLayout.height = this.layout.panel.height
-    this.landmarkRelMzErrorLayout.width = this.layout.panel.width
-    this.landmarkAbsMzErrorLayout.height = this.layout.panel.height
-    this.landmarkAbsMzErrorLayout.width = this.layout.panel.width
-    this.landmarkPeakAreaLayout.height = this.layout.panel.height
-    this.landmarkPeakAreaLayout.width = this.layout.panel.width
-    // grid layout
-    this.gridRowHeight = (this.layout.main.height - 390) / 40
-    this.gridColWidth = (this.layout.main.width - 470) / 48
-    // detail panel
-    this.detailPanelLayout.width = document.body.clientWidth - SIDEBAR_WIDTH - 20
-    this.detailPanelLayout.height = document.body.clientHeight - HEADER_HEIGHT - 10 - 32 - 40
-    // editor panel
-    this.editorPanelLayout.width = document.body.clientWidth - SIDEBAR_WIDTH - 20 - EDITOR_WIDTH
-    this.editorPanelLayout.height = document.body.clientHeight - HEADER_HEIGHT - 10 - 32 - 40
-    this.layout.editor.width = 300
-    this.layout.editor.height = (document.body.clientHeight - HEADER_HEIGHT - 10 - 32)
-
-    // 动态调整sidebar的高度
-    setInterval(() => {
-      self.layout.sidebar.height = document.body.scrollHeight
-    }, 2000)
+    // 调整样本列表区域的高度
+    /*
+    setTimeout(() => {
+      document.getElementById('progress').style.height = document.body.scrollHeight - 70 + 'px'
+      document.getElementById('progress').style.maxHeight = document.body.scrollHeight - 70 + 'px'
+    }, 3000)
+    */
   },
   watch: {
     'viewMode': function (to, from) {
@@ -1488,6 +1431,7 @@ export default {
         self.renderLandmarkRtPanel(val)
         self.renderLandmarkIntensityPanel(val)
         self.renderLandmarkRelMzErrorPanel(val)
+        self.renderLandmarkAbsMzErrorPanel(val)
         self.renderLandmarkPeakAreaPanel(val)
       })
     },
@@ -1977,7 +1921,7 @@ export default {
      * 过滤 base peak chromatogram / total ion chromatogram / extract ion chromatogram
      * @param {} name 样本名称
      */
-    filterIonCurrentData (name, lastN) {
+    filterIonCurrentData (name) {
       this.selectedSampleOfIonCurrentData = name
       this.currentChromatogram = this.updatePanelTitle(this.currentChromatogram, name)
       if (name === 'All data') {
@@ -1988,16 +1932,11 @@ export default {
         } else if (this.currentChromatogram.startsWith('Extract Ion Chromatogram')) {
           this.ionCurrentData = this.extractIonCurrentData
         }
-        // 筛选 last N 个样本数据进行展示
-        if (typeof (lastN) === 'number' && this.ionCurrentData.length >= lastN) {
-          this.ionCurrentData = this.ionCurrentData.slice(this.ionCurrentData.length - lastN)
-        }
       } else {
         if (this.currentChromatogram.startsWith('Base Peak Chromatogram')) {
-          // 因为第一个元素是All data,所以这里的indexOf定位元素索引后要-1
-          this.ionCurrentData = [this.basePeakCurrentData[this.ionCurrentDataFilterOptions.indexOf(name) - 1]]
+          this.ionCurrentData = [this.basePeakCurrentData[this.ionCurrentDataFilterOptions.indexOf(name)]]
         } else if (this.currentChromatogram.startsWith('Total Ion Chromatogram')) {
-          this.ionCurrentData = [this.totalIonCurrentData[this.ionCurrentDataFilterOptions.indexOf(name) - 1]]
+          this.ionCurrentData = [this.totalIonCurrentData[this.ionCurrentDataFilterOptions.indexOf(name)]]
         } else if (this.currentChromatogram.startsWith('Extract Ion Chromatogram')) {
           for (var i = 0; i < this.extractIonCurrentData.length; i++) {
             if (this.extractIonCurrentData[i].name === name) {
@@ -2012,7 +1951,7 @@ export default {
      * 过滤landmark rt
      * @param {} name name of landmark
      */
-    filterLandmarkRtData (name, lastN) {
+    filterLandmarkRtData (name) {
       this.selectedLandmarkOfRt = name
       this.panelTitleOfRT = this.updatePanelTitle(this.panelTitleOfRT, name)
       if (name.startsWith('All')) {
@@ -2023,13 +1962,6 @@ export default {
             this.selectedLandmarkRtData = [this.landmarkRtData[i]]
             break
           }
-        }
-      }
-      // 筛选 last N 个样本数据进行展示
-      if (typeof (lastN) === 'number' && this.selectedLandmarkRtData[0].x.length >= lastN) {
-        for (var k = 0; k < this.selectedLandmarkRtData.length; k++) {
-          this.selectedLandmarkRtData[k].x = this.selectedLandmarkRtData[k].x.slice(this.selectedLandmarkRtData[k].x.length - lastN)
-          this.selectedLandmarkRtData[k].y = this.selectedLandmarkRtData[k].y.slice(this.selectedLandmarkRtData[k].y.length - lastN)
         }
       }
       this.renderWLQL(this.selectedLandmarkRtData, 'landmarkRt', this.panelOptions.landmarkRt)
@@ -2109,20 +2041,6 @@ export default {
         }
       }
       this.renderWLQL(this.selectedLandmarkPeakAreaData, 'landmarkPeakArea', this.panelOptions.landmarkPeakArea)
-    },
-    /**
-     * 全局过滤 last n 个样本数据进行展示
-     */
-    async filterLastNSamples (option) {
-      this.selectedLastNSamples = option
-      await this.updateLandmarks()
-      // await this.updateIonCurrent()
-      // this.filterIonCurrentData(this.selectedSampleOfIonCurrentData, option.value)
-      this.filterLandmarkRtData(this.selectedLandmarkOfRt, option.value)
-      this.filterLandmarkIntensityData(this.selectedLandmarkOfIntensity, option.value)
-      this.filterLandmarkAbsMzErrorData(this.selectedLandmarkOfAbsMzError, option.value)
-      this.filterLandmarkRelMzErrorData(this.selectedLandmarkOfRelMzError, option.value)
-      this.filterLandmarkPeakAreaData(this.selectedLandmarkOfPeakArea, option.value)
     },
     filterLandmarks (name) {
       this.selectedLandmark = name
@@ -2450,13 +2368,13 @@ export default {
       this.collapseEditArea = !this.collapseEditArea
       if (this.collapseEditArea) {
         if (this.viewMode === 'default') {
-          this.editorPanelLayout.width = (document.body.clientWidth - 150 - 20)
+          this.editorPanelLayout.width = (document.body.clientWidth - SIDEBAR_WIDTH - 20)
         } else if (this.viewMode === 'hideSidebar' || this.viewMode === 'hideHeader') {
           this.editorPanelLayout.width = (document.body.clientWidth - 20)
         }
       } else {
         if (this.viewMode === 'default') {
-          this.editorPanelLayout.width = (document.body.clientWidth - 150 - 20 - 300)
+          this.editorPanelLayout.width = (document.body.clientWidth - SIDEBAR_WIDTH - 20 - 300)
         } else if (this.viewMode === 'hideSidebar' || this.viewMode === 'hideHeader') {
           this.editorPanelLayout.width = (document.body.clientWidth - 20 - 300)
         }
@@ -2504,6 +2422,13 @@ export default {
     },
     loadProject (id) {
       var self = this
+      this.loadingMonitorSamples = true
+      this.loadingIonCurrentData = true
+      this.loadingLandmarkRtData = true
+      this.loadingLandmarkIntensityData = true
+      this.loadingLandmarkRelMzErrorData = true
+      this.loadingLandmarkAbsMzErrorData = true
+      this.loadingLandmarkPeakAreaData = true
       this.axios({
         method: 'get',
         url: API_BASE + `/project/${id}`
@@ -2514,6 +2439,7 @@ export default {
           self.monitorTask.taskId = data.taskId
           self.monitorTask.monitorPath = data.monitorPath
           self.monitorTask.monitorSamples = data.monitorSamples
+          self.loadingMonitorSamples = false
 
           const bpcList = data.basePeakCurrentList
           self.renderBasePeakCurrentPanel(bpcList)
@@ -2523,13 +2449,23 @@ export default {
 
           const eicList = data.extractIonCurrentList
           self.renderExtractIonCurrentPanel(eicList)
+          self.loadingIonCurrentData = false
 
           const landmarkDataList = data.landmarkDataList
           self.renderLandmarkRtPanel(landmarkDataList)
+          self.loadingLandmarkRtData = false
+
           self.renderLandmarkIntensityPanel(landmarkDataList)
+          self.loadingLandmarkIntensityData = false
+
           self.renderLandmarkRelMzErrorPanel(landmarkDataList)
+          self.loadingLandmarkRelMzErrorData = false
+
           self.renderLandmarkAbsMzErrorPanel(landmarkDataList)
+          self.loadingLandmarkAbsMzErrorData = false
+
           self.renderLandmarkPeakAreaPanel(landmarkDataList)
+          self.loadingLandmarkPeakAreaData = false
         } else {
           this.$notify({
             title: 'Project load failure, please try again later.',
@@ -2657,6 +2593,12 @@ export default {
             title: 'Project saving failure, please try again later.',
             type: 'warning'
           })
+        } else {
+          this.$notify({
+            title: 'OK',
+            message: 'Project saved successfully',
+            type: 'success'
+          })
         }
       }).catch(failResp => {
         console.log(failResp)
@@ -2708,6 +2650,73 @@ export default {
       if (row.status === 'running') {
         return 'project-running-row'
       }
+    },
+    initResizeControl () {
+      var self = this
+      let left = document.getElementById('sidebar')
+      let line = document.getElementById('resize')
+      // 鼠标按下事件
+      line.onmousedown = function (e) {
+        let startX = e.clientX
+        line.left = line.offsetLeft
+        // 鼠标拖动事件
+        document.onmousemove = function (e) {
+          let moveLen = line.left + (e.clientX - startX)
+          if (moveLen > 150 && moveLen < 600) {
+            line.style.left = moveLen + 'px'
+            left.style.width = moveLen + 'px'
+            SIDEBAR_WIDTH = moveLen
+            self.initLayout()
+            self.applyGridLayout()
+          }
+        }
+        document.onmouseup = function () {
+          document.onmousemove = null
+          document.onmouseup = null
+        }
+      }
+    },
+    initLayout () {
+      // initial layout
+      this.layout.header.height = HEADER_HEIGHT
+      this.layout.header.width = document.body.clientWidth - SIDEBAR_WIDTH
+      this.layout.sidebar.height = document.body.clientHeight
+      this.layout.sidebar.width = SIDEBAR_WIDTH
+      this.layout.main.height = document.body.clientHeight - HEADER_HEIGHT
+      this.layout.main.width = document.body.clientWidth - SIDEBAR_WIDTH
+      this.layout.panel.height = (document.body.clientHeight - HEADER_HEIGHT - 10) / 2 - 40
+      this.layout.panel.width = (document.body.clientWidth - SIDEBAR_WIDTH - 40) / 3
+      this.ionCurrentLayout.height = this.layout.panel.height
+      this.ionCurrentLayout.width = this.layout.panel.width
+      this.landmarkRtLayout.height = this.layout.panel.height
+      this.landmarkRtLayout.width = this.layout.panel.width
+      this.landmarkIntensityLayout.height = this.layout.panel.height
+      this.landmarkIntensityLayout.width = this.layout.panel.width
+      this.landmarkRelMzErrorLayout.height = this.layout.panel.height
+      this.landmarkRelMzErrorLayout.width = this.layout.panel.width
+      this.landmarkAbsMzErrorLayout.height = this.layout.panel.height
+      this.landmarkAbsMzErrorLayout.width = this.layout.panel.width
+      this.landmarkPeakAreaLayout.height = this.layout.panel.height
+      this.landmarkPeakAreaLayout.width = this.layout.panel.width
+      // grid layout
+      this.gridRowHeight = (this.layout.main.height - 390) / 40
+      this.gridColWidth = (this.layout.main.width - 470) / 48
+      // detail panel
+      this.detailPanelLayout.width = document.body.clientWidth - SIDEBAR_WIDTH - 20
+      this.detailPanelLayout.height = document.body.clientHeight - HEADER_HEIGHT - 10 - 32 - 40
+      // editor panel
+      this.editorPanelLayout.width = document.body.clientWidth - SIDEBAR_WIDTH - 20 - EDITOR_WIDTH
+      this.editorPanelLayout.height = document.body.clientHeight - HEADER_HEIGHT - 10 - 32 - 40
+      this.layout.editor.width = 300
+      this.layout.editor.height = (document.body.clientHeight - HEADER_HEIGHT - 10 - 32)
+
+      // 动态调整sidebar的高度
+      var self = this
+      setInterval(() => {
+        self.layout.sidebar.height = document.body.scrollHeight
+        document.getElementById('progress').style.height = document.body.scrollHeight - 60 + 'px'
+        document.getElementById('progress').style.maxHeight = document.body.scrollHeight - 60 + 'px'
+      }, 5000)
     }
   }
 }
@@ -2771,11 +2780,9 @@ fieldset {
 
 .sample-list-container {
   padding: 0px 10px 5px 5px;
-  border-right: 1px solid rgb(216, 222, 228);
   overflow-y: scroll;
   overflow-x: hidden;
   box-sizing: border-box;
-  max-height: calc(100vh - 50px);
 }
 
 .sample-list-item {
@@ -3340,5 +3347,31 @@ button.primary-btn.el-button.el-button--primary {
   margin-top: 5px;
   margin-bottom: 20px;
   width: 100%;
+}
+
+.sidebar {
+  border-right: 1px solid rgba(36, 41, 46, 0.12);
+  position: relative;
+}
+
+.resize {
+  position: absolute;
+  cursor: col-resize;
+  width: 6px;
+  height: 50px;
+  top: 400px;
+  right: -6px;
+  background-color: #d6d6d6;
+  z-index: 301;
+}
+
+#main-container {
+  background-color: #f4f5f5;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
 }
 </style>
