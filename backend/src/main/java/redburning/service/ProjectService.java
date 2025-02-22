@@ -64,10 +64,11 @@ public class ProjectService {
 	
 	public ProjectDataVo loadProjectData(String id) {
 		ProjectDataVo projectDataVo = new ProjectDataVo();
-		projectDataVo.setTaskId(id);
+		projectDataVo.setProjectId(id);
 		
 		// ProjectEntity
 		ProjectEntity projectEntity = getProject(id);
+		projectDataVo.setProjectName(projectEntity.getName());
 		projectDataVo.setMonitorPath(projectEntity.getMonitorDir());
 		
 		// MonitorFilesEntity

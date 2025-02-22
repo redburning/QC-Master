@@ -67,7 +67,7 @@ public class MzXmlDataParser {
 	}
 	
 	public void setSampleList(List<String> sampleList) {
-		// TODO: 从磁盘加载时sampleList可能缺失
+		this.sampleList = sampleList;
 	}
 	
 	public void parseSampleName(String filePath) {
@@ -119,9 +119,7 @@ public class MzXmlDataParser {
 		}
 		source.close();
 		
-		System.out.println(totalIonCurrentTrace.size());
 		DataSampling.layerSampling(rtTrace, totalIonCurrentTrace);
-		System.out.println(totalIonCurrentTrace.size());
 		
 		String sampleName = filePath.substring(filePath.lastIndexOf(File.separator) + 1, filePath.length() - 6);		
 		TICEntity ticEntity = new TICEntity(taskId,

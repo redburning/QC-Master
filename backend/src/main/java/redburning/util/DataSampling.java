@@ -39,4 +39,28 @@ public class DataSampling {
         yValue.addAll(yValueSampling);
     }
 	
+	/**
+	 * 对 List<Double> 类型的数据进行欠采样
+	 * 
+	 * @param data    输入的数据列表
+	 * @param percent 采样百分比，范围在 0 到 1 之间
+	 * @return 欠采样后的数据列表
+	 */
+	public static List<Double> sampling(List<Double> data, double percent) {
+		if (data == null || data.isEmpty() || percent <= 0 || percent >= 1) {
+			return data;
+		}
+
+		List<Double> sampledData = new ArrayList<>();
+		int step = (int) Math.round(1 / percent);
+
+		for (int i = 0; i < data.size(); i++) {
+			if (i % step == 0) {
+				sampledData.add(data.get(i));
+			}
+		}
+
+		return sampledData;
+	}
+	
 }

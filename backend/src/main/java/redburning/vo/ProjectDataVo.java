@@ -7,7 +7,8 @@ import lombok.Data;
 @Data
 public class ProjectDataVo {
 
-	private String taskId;
+	private String projectId;
+	private String projectName;
     private String monitorPath;
     private List<String> monitorSamples;
     

@@ -7,7 +7,7 @@
       <div id="progress" class="sample-list-container" v-loading="loadingMonitorSamples" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
         <ul style="list-style-type:none; padding-left:5px; margin-top: 0px;">
           <li v-for="(sample, index) in monitorTask.monitorSamples" :key="sample" style="display: flex;"
-            :class="{ 'sample-list-item': sample.indexOf('QC') === -1, 'sample-list-item-qc': sample.indexOf('QC') !== -1 }">
+            :class="{ 'sample-list-item': !isQC(sample), 'sample-list-item-qc': isQC(sample) }">
             <el-button style="border: none; background-color: rgba(0,0,0,0); color: white; padding: 0px; font-size: 13px; cursor: pointer; display: flex; width: 100%; align-items: center;" @click="onSelectedSample(sample)" @dblclick.native="onDBClickSample(sample)">
               <svg t="1694444178129" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13049" width="12" height="12">
                 <path d="M567.168 115.498667l34.901333 34.901333L141.568 610.901333C105.301333 647.168 85.333333 695.381333 85.333333 746.666667s19.968 99.498667 56.234667 135.808C177.877333 918.698667 226.090667 938.666667 277.333333 938.666667s99.456-19.968 135.765334-56.234667L873.6 421.930667l34.901333 34.901333 60.330667-60.330667-341.333333-341.333333-60.330667 60.330667z m135.765333 356.437333l-102.528-102.570667-60.330666 60.330667 102.528 102.570667-60.330667 60.373333-42.24-42.24-60.330667 60.330667 42.24 42.24-60.373333 60.373333-102.528-102.570667L298.666667 671.061333l102.528 102.570667-48.469334 48.469333c-40.32 40.277333-110.506667 40.277333-150.826666 0C181.76 801.92 170.666667 775.168 170.666667 746.666667s11.093333-55.253333 31.232-75.434667L662.4 210.730667l150.826667 150.826666-110.293334 110.378667z" p-id="13050" fill="white"></path>
@@ -63,7 +63,7 @@
 
           <div style="position: relative;">
             <el-button size="small" class="toolbar-button" style="padding: 2px 8px;" @click.stop="collapseLandmarkSelectionDropdownMenu = !collapseLandmarkSelectionDropdownMenu">
-              <div style="display: flex; align-items: center;">
+              <div class="flex-center">
                 <div>
                   <svg t="1693320827578" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6865" width="16" height="16">
                     <path d="M688.896 0v1024l261.717333-208.469333V142.250667z m-121.728 800.341333l-210.730667 92.032V89.002667l210.730667 62.378666z m-493.738667-23.594666l161.28-42.624V221.354667l-160.512-25.856z" p-id="6866"></path>
@@ -108,8 +108,8 @@
           </el-tooltip>
         </div>
       </div>
-      <div id="main" style="background-color: #f4f5f5;" :style="{ width: layout.main.width + 'px', height: layout.main.height + 'px' }" v-if="router.path === 'overview'">
-        <grid-layout :layout.sync="gridLayout" :col-num="48" :row-height="gridRowHeight" :is-draggable="true" :is-resizable="true" :is-mirrored="false"
+      <div id="main" style="background-color: #f4f5f5;" :style="{ width: layout.main.width + 'px', height: layout.main.height + 'px' }" v-show="router.path === 'overview'">
+        <grid-layout id="grid-layout" :layout.sync="gridLayout" :col-num="48" :row-height="gridRowHeight" :is-draggable="true" :is-resizable="true" :is-mirrored="false"
           :vertical-compact="true" :margin="[10, 10]" :use-css-transforms="true">
           <grid-item v-for="item in gridLayout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @resize="resizePanel" drag-allow-from=".vue-draggable-handle" drag-ignore-from=".no-drag">
             <div v-if="item.i === 0" v-loading="loadingIonCurrentData" element-loading-text="loading data" element-loading-spinner="el-icon-loading">
@@ -118,7 +118,7 @@
                   <span>{{ currentChromatogram }}<i class="el-icon-arrow-down el-icon--right"></i></span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="viewIonCurrent">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"></path></svg>
                         </div>
@@ -127,7 +127,7 @@
                     </el-dropdown-item>
                     <!--
                     <el-dropdown-item command="editIonCurrent">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"></path></svg>
                         </div>
@@ -136,7 +136,7 @@
                     </el-dropdown-item>
                     -->
                     <el-dropdown-item command="switchIonCurrent1">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg t="1687500158194" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2803" width="14" height="14"><path d="M737.718857 292.571429L637.805714 192.658286a73.142857 73.142857 0 1 1 103.424-103.424l229.229715 229.229714a73.142857 73.142857 0 0 1-79.798858 119.222857C886.491429 438.418286 882.102857 438.857143 877.714286 438.857143H73.142857a73.142857 73.142857 0 1 1 0-146.285714h664.576zM254.171429 731.428571l99.913142 99.913143a73.142857 73.142857 0 1 1-103.424 103.424L21.430857 705.536a73.142857 73.142857 0 0 1 79.725714-119.222857C105.472 585.581714 109.714286 585.142857 114.249143 585.142857h804.571428a73.142857 73.142857 0 1 1 0 146.285714H254.171429z" fill="#747A7D" p-id="2804"></path></svg>
                         </div>
@@ -144,7 +144,7 @@
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="switchIonCurrent2">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg t="1687500158194" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2803" width="14" height="14"><path d="M737.718857 292.571429L637.805714 192.658286a73.142857 73.142857 0 1 1 103.424-103.424l229.229715 229.229714a73.142857 73.142857 0 0 1-79.798858 119.222857C886.491429 438.418286 882.102857 438.857143 877.714286 438.857143H73.142857a73.142857 73.142857 0 1 1 0-146.285714h664.576zM254.171429 731.428571l99.913142 99.913143a73.142857 73.142857 0 1 1-103.424 103.424L21.430857 705.536a73.142857 73.142857 0 0 1 79.725714-119.222857C105.472 585.581714 109.714286 585.142857 114.249143 585.142857h804.571428a73.142857 73.142857 0 1 1 0 146.285714H254.171429z" fill="#747A7D" p-id="2804"></path></svg>
                         </div>
@@ -187,7 +187,7 @@
                   <span>{{ panelTitleOfRT }}<i class="el-icon-arrow-down el-icon--right"></i></span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="viewLandmarkRt">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"></path></svg>
                         </div>
@@ -195,7 +195,7 @@
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="editLandmarkRt">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"></path></svg>
                         </div>
@@ -231,7 +231,7 @@
                   <span>{{ panelTitleOfIntensity }}<i class="el-icon-arrow-down el-icon--right"></i></span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="viewLandmarkIntensity">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"></path></svg>
                         </div>
@@ -239,7 +239,7 @@
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="editLandmarkIntensity">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"></path></svg>
                         </div>
@@ -275,7 +275,7 @@
                   <span>{{ panelTitleOfRelMzError }}<i class="el-icon-arrow-down el-icon--right"></i></span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="viewLandmarkRelMzError">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"></path></svg>
                         </div>
@@ -283,7 +283,7 @@
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="editLandmarkRelMzError">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"></path></svg>
                         </div>
@@ -319,7 +319,7 @@
                   <span>{{ panelTitleOfAbsMzError }}<i class="el-icon-arrow-down el-icon--right"></i></span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="viewLandmarkAbsMzError">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"></path></svg>
                         </div>
@@ -327,7 +327,7 @@
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="editLandmarkAbsMzError">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"></path></svg>
                         </div>
@@ -363,7 +363,7 @@
                   <span>{{ panelTitleOfPeakArea }}<i class="el-icon-arrow-down el-icon--right"></i></span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="viewLandmarkPeakArea">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"></path></svg>
                         </div>
@@ -371,7 +371,7 @@
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="editLandmarkPeakArea">
-                      <div style="display: flex; align-items: center;">
+                      <div class="flex-center">
                         <div style="padding-top:4px">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"></path></svg>
                         </div>
@@ -415,7 +415,7 @@
               <span>{{ detailPanelTitle }}<i class="el-icon-arrow-down el-icon--right"></i></span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item :command=editDetailPanelCommand>
-                  <div style="display: flex; align-items: center;">
+                  <div class="flex-center">
                     <div style="padding-top:4px">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="css-18xxn5p"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"></path></svg>
                     </div>
@@ -434,7 +434,7 @@
                       </div>
                     </div>
                     <el-dropdown-menu slot="dropdown" style="max-height:500px; overflow-y: scroll;">
-                      <template v-if="router.path==='detail' && (router.type.startsWith('landmark') || router.type === 'extractIonCurrent')">
+                      <template v-if="router.type.startsWith('landmark') || router.type === 'extractIonCurrent'">
                         <el-dropdown-item v-for="option in [{'id':'0000', name:'All data'}].concat(landmarkData)" :key="option.id" :command=option.name style="font-size:12px;">{{ option.name }}</el-dropdown-item>
                       </template>
                       <template v-else>
@@ -450,6 +450,7 @@
         </div>
       </div>
 
+      <!-- Panel Editor Begin-->
       <div style="background-color: #f4f5f5;" v-if="router.path === 'editor'">
         <div style="display: flex; justify-content: space-between;">
           <el-button size="mini" @click="goBack" round style="margin: 0px 10px" class="back-button">
@@ -512,60 +513,21 @@
                       <div class="el-form-subitem-wrapper">
                         <span class="settings-label">Line width</span>
                       </div>
-                      <el-select v-model="editorPanelOptions.lineWidth" size="mini"  @change="editPanel" style="width:80px">
-                        <el-option v-for="item in lineWidthOptions" :key="item.value" :label="item.label" :value="item.value" size="mini"></el-option>
-                      </el-select>
+                      <el-input-number v-model="editorPanelOptions.lineWidth" :step="1" :min="1" :max="10" size="mini" style="width:110px;" v-on:change="editPanel"></el-input-number>
                     </div>
                   </el-row>
                   <el-row style="margin:8px 0px;">
                     <div style="display:flex; gap:8px;">
                       <div class="el-form-subitem-wrapper">
-                        <span class="settings-label">Marker size of QC</span>
+                        <span class="settings-label">Marker size</span>
                       </div>
-                      <el-select v-model="editorPanelOptions.markerSizeOfQC" size="mini" @change="editPanel" style="width:80px">
-                        <el-option v-for="item in markerSizeOptions" :key="item.value" :label="item.label" :value="item.value" size="mini"></el-option>
-                      </el-select>
-                    </div>
-                  </el-row>
-                  <el-row style="margin:8px 0px;">
-                    <div style="display:flex; gap:8px;">
-                      <div class="el-form-subitem-wrapper">
-                        <span class="settings-label">Marker size of Blank</span>
-                      </div>
-                      <el-select v-model="editorPanelOptions.markerSizeOfBlank" size="mini" @change="editPanel" style="width:80px">
-                        <el-option v-for="item in markerSizeOptions" :key="item.value" :label="item.label" :value="item.value" size="mini"></el-option>
-                      </el-select>
+                      <el-input-number v-model="editorPanelOptions.markerSizeOfBlank" :step="1" :min="1" :max="10" size="mini" style="width:110px;" v-on:change="editPanel"></el-input-number>
                     </div>
                   </el-row>
                   <el-row style="margin:8px 0px">
                     <div style="display:flex; gap:8px;">
                       <div class="el-form-subitem-wrapper">
-                        <span class="settings-label">Marker shape of QC</span>
-                      </div>
-                      <div class="radio-group">
-                        <input type="radio" class="radio-hidden" id="option-qc-marker-shape-diamond" name="markerShapeOfQC" value="diamond" v-model="editorPanelOptions.markerShapeOfQC" @change="editPanel">
-                        <label class="radio-label" for="option-qc-marker-shape-diamond">
-                          <svg t="1687413292449" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5932" width="8" height="8"><path d="M0.000827 512.005117L511.99571 0 1023.99571 512.005117 512.000827 1024z" p-id="5933"></path></svg>
-                        </label>
-                        <input type="radio" class="radio-hidden" id="option-qc-marker-shape-triangle-up" name="markerShapeOfQC" value="triangle-up" v-model="editorPanelOptions.markerShapeOfQC" @change="editPanel">
-                        <label class="radio-label" for="option-qc-marker-shape-triangle-up">
-                          <svg t="1687418997416" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1566" width="10" height="10"><path d="M168.704 810.666667h686.592a21.333333 21.333333 0 0 0 17.493333-33.493334L529.578667 281.344a21.333333 21.333333 0 0 0-35.072 0L151.168 777.173333a21.333333 21.333333 0 0 0 17.536 33.493334z" fill="#000000" p-id="1567"></path></svg>
-                        </label>
-                        <input type="radio" class="radio-hidden" id="option-qc-marker-shape-circle" name="markerShapeOfQC" value="" v-model="editorPanelOptions.markerShapeOfQC" @change="editPanel">
-                        <label class="radio-label" for="option-qc-marker-shape-circle">
-                          <svg t="1687419880496" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2495" width="8" height="8"><path d="M950.857143 512q0 119.428571-58.857143 220.285714T732.285714 892 512 950.857143t-220.285714-58.857143T132 732.285714 73.142857 512t58.857143-220.285714T291.714286 132 512 73.142857t220.285714 58.857143T892 291.714286 950.857143 512z" p-id="2496" fill="#2c2c2c"></path></svg>
-                        </label>
-                        <input type="radio" class="radio-hidden" id="option-qc-marker-shape-x" name="markerShapeOfQC" value="x" v-model="editorPanelOptions.markerShapeOfQC" @change="editPanel">
-                        <label class="radio-label" for="option-qc-marker-shape-x">
-                          <svg t="1687420128561" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4349" width="8" height="8"><path d="M180.48 0L0 180.48l92.16 92.16L320 504.32 92.16 732.16 0 820.48l180.48 184.32 92.16-92.16 231.68-231.68 227.84 231.68 88.32 92.16 184.32-184.32-92.16-88.32-231.68-227.84 231.68-231.68 92.16-92.16L820.48 0l-88.32 92.16L504.32 320 272.64 92.16 180.48 0z" p-id="4350" fill="#2c2c2c"></path></svg>
-                        </label>
-                      </div>
-                    </div>
-                  </el-row>
-                  <el-row style="margin:8px 0px">
-                    <div style="display:flex; gap:8px;">
-                      <div class="el-form-subitem-wrapper">
-                        <span class="settings-label">Marker shape of Blank</span>
+                        <span class="settings-label">Marker shape</span>
                       </div>
                       <div class="radio-group">
                         <input type="radio" class="radio-hidden" id="option-blank-marker-shape-diamond" value="diamond" name="markerShapeOfBlank" v-model="editorPanelOptions.markerShapeOfBlank" @change="editPanel">
@@ -590,19 +552,54 @@
                   <el-row style="margin:8px 0px">
                     <div style="display:flex; gap:8px; align-items: center;">
                       <div class="el-form-subitem-wrapper">
-                        <span class="settings-label">Marker color of QC</span>
+                        <span class="settings-label">Highlight QC</span>
                       </div>
-                      <v-swatches v-model="editorPanelOptions.markerColorOfQC" :swatches="swatches" show-fallback popover-x="left" @input="editPanel"></v-swatches>
+                      <el-switch v-model="editorPanelOptions.highlightQC" active-color="#3871dc" inactive-color="lightgray" style="width:36px; height:16px;" v-on:change="editPanel"></el-switch>
                     </div>
                   </el-row>
-                  <el-row style="margin:8px 0px">
-                    <div style="display:flex; gap:8px; align-items: center;">
-                      <div class="el-form-subitem-wrapper">
-                        <span class="settings-label">Marker color of Blank</span>
+                  <div v-show="editorPanelOptions.highlightQC">
+                    <el-row style="margin:8px 0px;">
+                      <div style="display:flex; gap:8px;">
+                        <div class="el-form-subitem-wrapper">
+                          <span class="settings-label">Marker size of QC</span>
+                        </div>
+                        <el-input-number v-model="editorPanelOptions.markerSizeOfQC" :step="1" :min="1" :max="10" size="mini" style="width:110px;" v-on:change="editPanel"></el-input-number>
                       </div>
-                      <v-swatches v-model="editorPanelOptions.markerColorOfBlank" :swatches="swatches" show-fallback popover-x="left" @input="editPanel"></v-swatches>
-                    </div>
-                  </el-row>
+                    </el-row>
+                    <el-row style="margin:8px 0px">
+                      <div style="display:flex; gap:8px;">
+                        <div class="el-form-subitem-wrapper">
+                          <span class="settings-label">Marker shape of QC</span>
+                        </div>
+                        <div class="radio-group">
+                          <input type="radio" class="radio-hidden" id="option-qc-marker-shape-diamond" name="markerShapeOfQC" value="diamond" v-model="editorPanelOptions.markerShapeOfQC" @change="editPanel">
+                          <label class="radio-label" for="option-qc-marker-shape-diamond">
+                            <svg t="1687413292449" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5932" width="8" height="8"><path d="M0.000827 512.005117L511.99571 0 1023.99571 512.005117 512.000827 1024z" p-id="5933"></path></svg>
+                          </label>
+                          <input type="radio" class="radio-hidden" id="option-qc-marker-shape-triangle-up" name="markerShapeOfQC" value="triangle-up" v-model="editorPanelOptions.markerShapeOfQC" @change="editPanel">
+                          <label class="radio-label" for="option-qc-marker-shape-triangle-up">
+                            <svg t="1687418997416" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1566" width="10" height="10"><path d="M168.704 810.666667h686.592a21.333333 21.333333 0 0 0 17.493333-33.493334L529.578667 281.344a21.333333 21.333333 0 0 0-35.072 0L151.168 777.173333a21.333333 21.333333 0 0 0 17.536 33.493334z" fill="#000000" p-id="1567"></path></svg>
+                          </label>
+                          <input type="radio" class="radio-hidden" id="option-qc-marker-shape-circle" name="markerShapeOfQC" value="" v-model="editorPanelOptions.markerShapeOfQC" @change="editPanel">
+                          <label class="radio-label" for="option-qc-marker-shape-circle">
+                            <svg t="1687419880496" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2495" width="8" height="8"><path d="M950.857143 512q0 119.428571-58.857143 220.285714T732.285714 892 512 950.857143t-220.285714-58.857143T132 732.285714 73.142857 512t58.857143-220.285714T291.714286 132 512 73.142857t220.285714 58.857143T892 291.714286 950.857143 512z" p-id="2496" fill="#2c2c2c"></path></svg>
+                          </label>
+                          <input type="radio" class="radio-hidden" id="option-qc-marker-shape-x" name="markerShapeOfQC" value="x" v-model="editorPanelOptions.markerShapeOfQC" @change="editPanel">
+                          <label class="radio-label" for="option-qc-marker-shape-x">
+                            <svg t="1687420128561" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4349" width="8" height="8"><path d="M180.48 0L0 180.48l92.16 92.16L320 504.32 92.16 732.16 0 820.48l180.48 184.32 92.16-92.16 231.68-231.68 227.84 231.68 88.32 92.16 184.32-184.32-92.16-88.32-231.68-227.84 231.68-231.68 92.16-92.16L820.48 0l-88.32 92.16L504.32 320 272.64 92.16 180.48 0z" p-id="4350" fill="#2c2c2c"></path></svg>
+                          </label>
+                        </div>
+                      </div>
+                    </el-row>
+                    <el-row style="margin:8px 0px">
+                      <div style="display:flex; gap:8px; align-items: center;">
+                        <div class="el-form-subitem-wrapper">
+                          <span class="settings-label">Connect QC as line</span>
+                        </div>
+                        <el-switch v-model="editorPanelOptions.connectQCAsLine" active-color="#3871dc" inactive-color="lightgray" style="width:36px; height:16px;" v-on:change="editPanel"></el-switch>
+                      </div>
+                    </el-row>
+                  </div>
                 </div>
               </div>
               <div>
@@ -623,19 +620,19 @@
                       <div class="el-form-subitem-wrapper">
                         <span class="settings-label">Show QL</span>
                       </div>
-                      <el-switch v-model="editorPanelOptions.showQL" active-color="#3871dc" inactive-color="lightgray" style="width:32px; height:16px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-switch>
+                      <el-switch v-model="editorPanelOptions.showQL" active-color="#3871dc" inactive-color="lightgray" style="width:36px; height:16px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-switch>
                     </div>
                   </el-row>
-                  <div v-if="router.path === 'editor' && router.type.startsWith('landmark')">
+                  <div v-show="router.type.startsWith('landmark')">
                     <div v-show="editorPanelOptions.showQL">
                       <el-row style="margin:8px 0px">
                         <div style="display:flex; gap:8px; align-items: center;">
                           <div class="el-form-subitem-wrapper">
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRt'">UQL(min)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkIntensity'">UQL(std)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRelMzError'">UQL(ppm)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkAbsMzError'">UQL(mDa)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkPeakArea'">UQL(std)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkRt'">UQL(min)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkIntensity'">UQL(std)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkRelMzError'">UQL(ppm)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkAbsMzError'">UQL(mDa)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkPeakArea'">UQL(std)</span>
                           </div>
                           <el-input-number v-model="editorPanelOptions.UQL" :step="0.1" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
@@ -643,11 +640,11 @@
                       <el-row style="margin:8px 0px">
                         <div style="display:flex; gap:8px; align-items: center;">
                           <div class="el-form-subitem-wrapper">
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRt'">BQL(min)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkIntensity'">BQL(std)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRelMzError'">BQL(ppm)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkAbsMzError'">BQL(mDa)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkPeakArea'">BQL(std)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkRt'">BQL(min)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkIntensity'">BQL(std)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkRelMzError'">BQL(ppm)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkAbsMzError'">BQL(mDa)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkPeakArea'">BQL(std)</span>
                           </div>
                           <el-input-number v-model="editorPanelOptions.BQL" :step="0.1" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
@@ -657,9 +654,7 @@
                           <div class="el-form-subitem-wrapper">
                             <span class="settings-label">Line width of QL</span>
                           </div>
-                          <el-select v-model="editorPanelOptions.lineWidthOfQL" size="mini"  @change="renderWLQL(editorPanelData, router.type, editorPanelOptions)" style="width:80px">
-                            <el-option v-for="item in lineWidthOptions" :key="item.value" :label="item.label" :value="item.value" size="mini"></el-option>
-                          </el-select>
+                          <el-input-number v-model="editorPanelOptions.lineWidthOfQL" :step="1" :min="1" :max="10" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
                       </el-row>
                       <el-row style="margin:8px 0px">
@@ -677,19 +672,19 @@
                       <div class="el-form-subitem-wrapper">
                         <span class="settings-label">Show WL</span>
                       </div>
-                      <el-switch v-model="editorPanelOptions.showWL" active-color="#3871dc" inactive-color="lightgray" style="width:32px; height:16px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-switch>
+                      <el-switch v-model="editorPanelOptions.showWL" active-color="#3871dc" inactive-color="lightgray" style="width:36px; height:16px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-switch>
                     </div>
                   </el-row>
-                  <div v-if="router.path==='editor' && router.type.startsWith('landmark')">
+                  <div v-if="router.type.startsWith('landmark')">
                     <div v-show="editorPanelOptions.showWL">
                       <el-row style="margin:8px 0px">
                         <div style="display:flex; gap:8px; align-items: center;">
                           <div class="el-form-subitem-wrapper">
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRt'">UWL(min)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkIntensity'">UWL(std)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRelMzError'">UWL(ppm)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkAbsMzError'">UWL(mDa)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkPeakArea'">UWL(std)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkRt'">UWL(min)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkIntensity'">UWL(std)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkRelMzError'">UWL(ppm)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkAbsMzError'">UWL(mDa)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkPeakArea'">UWL(std)</span>
                           </div>
                           <el-input-number v-model="editorPanelOptions.UWL" :step="0.1" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
@@ -697,11 +692,11 @@
                       <el-row style="margin:8px 0px">
                         <div style="display:flex; gap:8px; align-items: center;">
                           <div class="el-form-subitem-wrapper">
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRt'">BWL(min)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkIntensity'">BWL(std)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkRelMzError'">BWL(ppm)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkAbsMzError'">BWL(mDa)</span>
-                            <span class="settings-label" v-if="router.path==='editor' && router.type==='landmarkPeakArea'">BWL(std)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkRt'">BWL(min)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkIntensity'">BWL(std)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkRelMzError'">BWL(ppm)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkAbsMzError'">BWL(mDa)</span>
+                            <span class="settings-label" v-if="router.type==='landmarkPeakArea'">BWL(std)</span>
                           </div>
                           <el-input-number v-model="editorPanelOptions.BWL" :step="0.1" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
@@ -711,9 +706,7 @@
                           <div class="el-form-subitem-wrapper">
                             <span class="settings-label">Line width of WL</span>
                           </div>
-                          <el-select v-model="editorPanelOptions.lineWidthOfWL" size="mini"  @change="renderWLQL(editorPanelData, router.type, editorPanelOptions)" style="width:80px">
-                            <el-option v-for="item in lineWidthOptions" :key="item.value" :label="item.label" :value="item.value" size="mini"></el-option>
-                          </el-select>
+                          <el-input-number v-model="editorPanelOptions.lineWidthOfWL" :step="1" :min="1" :max="10" size="mini" style="width: 110px;" v-on:change="renderWLQL(editorPanelData, router.type, editorPanelOptions)"></el-input-number>
                         </div>
                       </el-row>
                       <el-row style="margin:8px 0px">
@@ -732,6 +725,8 @@
           </div>
         </div>
       </div>
+      <!--Panel Editor End-->
+
     </div>
 
     <el-dialog title="Choose monitor directory" :visible.sync="selectMonitorFileDialogVisible" custom-class="custom-dilaog" width="800px" class="monitor-dialog">
@@ -948,13 +943,6 @@ export default {
       panelTitleOfAbsMzError: 'Absolute m/z Error',
       panelTitleOfPeakArea: 'Peak Area',
       // panel options
-      ionCurrentPanelOptions: {
-        lineWidth: 1,
-        markerSizeOfQC: 6,
-        markerSizeOfBlank: 4,
-        markerShapeOfQC: 'diamond',
-        markerShapeOfBlank: ''
-      },
       panelOptions: {},
       // 调色板
       swatches: ['#1fbc9c', '#1ca085', '#2ecc70', '#3cb770', '#3398db', '#2980b9', '#a463bf', '#8e43ad', '#3d556e', '#222f3d', '#f2c511', '#f39c19', '#e84b3c', '#c0382b', '#bdc3c8', ''],
@@ -1106,8 +1094,8 @@ export default {
         markerSizeOfBlank: 1,
         markerShapeOfQC: '',
         markerShapeOfBlank: '',
-        markerColorOfQC: '',
-        markerColorOfBlank: '',
+        highlightQC: true,
+        connectQCAsLine: false,
         showQL: true,
         showWL: true,
         UQL: 0.5,
@@ -1119,30 +1107,6 @@ export default {
         lineColorOfQL: 'orange',
         lineColorOfWL: 'orange'
       },
-      lineWidthOptions: [
-        { label: '1', value: 1 },
-        { label: '2', value: 2 },
-        { label: '3', value: 3 },
-        { label: '4', value: 4 },
-        { label: '5', value: 5 },
-        { label: '6', value: 6 },
-        { label: '7', value: 7 },
-        { label: '8', value: 8 },
-        { label: '9', value: 9 },
-        { label: '10', value: 10 }
-      ],
-      markerSizeOptions: [
-        { label: '1', value: 1 },
-        { label: '2', value: 2 },
-        { label: '3', value: 3 },
-        { label: '4', value: 4 },
-        { label: '5', value: 5 },
-        { label: '6', value: 6 },
-        { label: '7', value: 7 },
-        { label: '8', value: 8 },
-        { label: '9', value: 9 },
-        { label: '10', value: 10 }
-      ],
       collapseEditArea: false,
       collapseBasicPanelOptions: false,
       collapseAdvancedPanelOptions: false,
@@ -1177,12 +1141,19 @@ export default {
     this.initLayout()
 
     // 调整样本列表区域的高度
-    /*
-    setTimeout(() => {
-      document.getElementById('progress').style.height = document.body.scrollHeight - 70 + 'px'
-      document.getElementById('progress').style.maxHeight = document.body.scrollHeight - 70 + 'px'
-    }, 3000)
-    */
+    setInterval(() => {
+      if (this.router.path === 'overview') {
+        const gridLayoutMaxHeight = document.getElementById('grid-layout').offsetHeight
+        if (gridLayoutMaxHeight > 0) {
+          self.layout.sidebar.height = gridLayoutMaxHeight + HEADER_HEIGHT + 'px'
+          document.getElementById('progress').style.height = gridLayoutMaxHeight + 'px'
+          document.getElementById('progress').style.maxHeight = gridLayoutMaxHeight + 'px'
+        }
+      } else {
+        document.getElementById('progress').style.height = document.body.clientHeight - HEADER_HEIGHT + 'px'
+        document.getElementById('progress').style.maxHeight = document.body.clientHeight - HEADER_HEIGHT + 'px'
+      }
+    }, 5000)
   },
   watch: {
     'viewMode': function (to, from) {
@@ -1482,149 +1453,208 @@ export default {
     },
     renderLandmarkRtPanel (val) {
       this.landmarkRtData = []
+      var qcTraces = []
       for (let i = 0; i < val.length; i++) {
         let option = this.panelOptions.landmarkRt
-        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
         let trace = {
           name: val[i].landmark,
-          mode: 'lines+markers',
+          mode: option.markerSizeOfBlank > 0 ? 'lines+markers' : 'lines',
           x: val[i].index,
           y: val[i].rt,
           line: { width: option.lineWidth },
-          marker: { symbol: symbol, size: size, color: color },
+          marker: { size: option.markerSizeOfBlank, symbol: option.markerShapeOfBlank },
           text: val[i].sample,
           sampleName: val[i].sample,
-          hovertemplate: 'sample: %{text}<br>value: %{y}'
+          hovertemplate: 'sample: %{text}<br>value: %{y}',
+          type: 'blank'
         }
         this.landmarkRtData.push(trace)
+
+        let qcIndex = val[i].sample.map((name, index) => this.isQC(name) ? index : -1).filter(index => index !== -1)
+        let qcRt = qcIndex.map(index => val[i].rt[index])
+        let qcTrace = {
+          name: val[i].landmark,
+          mode: option.connectQCAsLine ? 'markers+lines' : 'markers',
+          x: qcIndex.map(index => index + 1),
+          y: qcRt,
+          marker: { size: option.markerSizeOfQC, symbol: option.markerShapeOfQC },
+          visible: option.highlightQC,
+          line: { width: 1 },
+          hoverinfo: 'none',
+          type: 'qc'
+        }
+        qcTraces.push(qcTrace)
       }
+      this.landmarkRtData.push(...qcTraces)
       this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
     },
     renderLandmarkIntensityPanel (val) {
       this.landmarkIntensityData = []
+      var qcTraces = []
       for (let i = 0; i < val.length; i++) {
         let option = this.panelOptions.landmarkIntensity
-        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
         let trace = {
           name: val[i].landmark,
-          mode: 'lines+markers',
+          mode: option.markerSizeOfBlank > 0 ? 'lines+markers' : 'lines',
           x: val[i].index,
           y: val[i].intensity,
           line: { width: option.lineWidth },
-          marker: { symbol: symbol, size: size, color: color },
+          marker: { size: option.markerSizeOfBlank, symbol: option.markerShapeOfBlank },
           text: val[i].sample,
           sampleName: val[i].sample,
-          hovertemplate: 'sample: %{text}<br>value: %{y}'
+          hovertemplate: 'sample: %{text}<br>value: %{y}',
+          type: 'blank'
         }
         this.landmarkIntensityData.push(trace)
+
+        let qcIndex = val[i].sample.map((name, index) => this.isQC(name) ? index : -1).filter(index => index !== -1)
+        let qcIntensity = qcIndex.map(index => val[i].intensity[index])
+        let qcTrace = {
+          name: val[i].landmark,
+          mode: option.connectQCAsLine ? 'markers+lines' : 'markers',
+          x: qcIndex.map(index => index + 1),
+          y: qcIntensity,
+          marker: { size: option.markerSizeOfQC, symbol: option.markerShapeOfQC },
+          visible: option.highlightQC,
+          line: { width: 1 },
+          hoverinfo: 'none',
+          type: 'qc'
+        }
+        qcTraces.push(qcTrace)
+
         this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
       }
+      this.landmarkIntensityData.push(...qcTraces)
     },
     renderLandmarkRelMzErrorPanel (val) {
       this.landmarkRelMzErrorData = []
+      var qcTraces = []
       for (let i = 0; i < val.length; i++) {
         let option = this.panelOptions.landmarkRelMzError
-        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
         let trace = {
           name: val[i].landmark,
-          mode: 'lines+markers',
+          mode: option.markerSizeOfBlank > 0 ? 'lines+markers' : 'lines',
           x: val[i].index,
           y: val[i].relMzError,
           line: { width: option.lineWidth },
-          marker: { symbol: symbol, size: size, color: color },
+          marker: { size: option.markerSizeOfBlank, symbol: option.markerShapeOfBlank },
           text: val[i].sample,
           sampleName: val[i].sample,
-          hovertemplate: 'sample: %{text}<br>value: %{y}'
+          hovertemplate: 'sample: %{text}<br>value: %{y}',
+          type: 'blank'
         }
         this.landmarkRelMzErrorData.push(trace)
+
+        let qcIndex = val[i].sample.map((name, index) => this.isQC(name) ? index : -1).filter(index => index !== -1)
+        let qcRelMzError = qcIndex.map(index => val[i].relMzError[index])
+        let qcTrace = {
+          name: val[i].landmark,
+          mode: option.connectQCAsLine ? 'markers+lines' : 'markers',
+          x: qcIndex.map(index => index + 1),
+          y: qcRelMzError,
+          marker: { size: option.markerSizeOfQC, symbol: option.markerShapeOfQC },
+          visible: option.highlightQC,
+          line: { width: 1 },
+          hoverinfo: 'none',
+          type: 'qc'
+        }
+        qcTraces.push(qcTrace)
       }
+      this.landmarkRelMzErrorData.push(...qcTraces)
       this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
     },
     renderLandmarkAbsMzErrorPanel (val) {
       this.landmarkAbsMzErrorData = []
+      var qcTraces = []
       for (let i = 0; i < val.length; i++) {
         let option = this.panelOptions.landmarkAbsMzError
-        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
         let trace = {
           name: val[i].landmark,
-          mode: 'lines+markers',
+          mode: option.markerSizeOfBlank > 0 ? 'lines+markers' : 'lines',
           x: val[i].index,
           y: val[i].absMzError,
           line: { width: option.lineWidth },
-          marker: { symbol: symbol, size: size, color: color },
+          marker: { size: option.markerSizeOfBlank, symbol: option.markerShapeOfBlank },
           text: val[i].sample,
           sampleName: val[i].sample,
-          hovertemplate: 'sample: %{text}<br>value: %{y}'
+          hovertemplate: 'sample: %{text}<br>value: %{y}',
+          type: 'blank'
         }
         this.landmarkAbsMzErrorData.push(trace)
+
+        let qcIndex = val[i].sample.map((name, index) => this.isQC(name) ? index : -1).filter(index => index !== -1)
+        let qcAbsMzError = qcIndex.map(index => val[i].absMzError[index])
+        let qcTrace = {
+          name: val[i].landmark,
+          mode: option.connectQCAsLine ? 'markers+lines' : 'markers',
+          x: qcIndex.map(index => index + 1),
+          y: qcAbsMzError,
+          marker: { size: option.markerSizeOfQC, symbol: option.markerShapeOfQC },
+          visible: option.highlightQC,
+          line: { width: 1 },
+          hoverinfo: 'none',
+          type: 'qc'
+        }
+        qcTraces.push(qcTrace)
       }
+      this.landmarkAbsMzErrorData.push(...qcTraces)
       this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
     },
     renderLandmarkPeakAreaPanel (val) {
       this.landmarkPeakAreaData = []
+      var qcTraces = []
       for (let i = 0; i < val.length; i++) {
         let option = this.panelOptions.landmarkPeakArea
-        let symbol = val[i].sample.map(name => this.isQC(name) ? option.markerShapeOfQC : option.markerShapeOfBlank)
-        let size = val[i].sample.map(name => this.isQC(name) ? option.markerSizeOfQC : option.markerSizeOfBlank)
-        let color = val[i].sample.map(name => this.isQC(name) ? option.markerColorOfQC : option.markerColorOfBlank)
         let trace = {
           name: val[i].landmark,
-          mode: 'lines+markers',
+          mode: option.markerSizeOfBlank > 0 ? 'lines+markers' : 'lines',
           x: val[i].index,
           y: val[i].peakArea,
           line: { width: option.lineWidth },
-          marker: { symbol: symbol, size: size, color: color },
+          marker: { size: option.markerSizeOfBlank, symbol: option.markerShapeOfBlank },
           text: val[i].sample,
           sampleName: val[i].sample,
-          hovertemplate: 'sample: %{text}<br>value: %{y}'
+          hovertemplate: 'sample: %{text}<br>value: %{y}',
+          type: 'blank'
         }
         this.landmarkPeakAreaData.push(trace)
+
+        let qcIndex = val[i].sample.map((name, index) => this.isQC(name) ? index : -1).filter(index => index !== -1)
+        let qcPeakArea = qcIndex.map(index => val[i].peakArea[index])
+        let qcTrace = {
+          name: val[i].landmark,
+          mode: option.connectQCAsLine ? 'markers+lines' : 'markers',
+          x: qcIndex.map(index => index + 1),
+          y: qcPeakArea,
+          marker: { size: option.markerSizeOfQC, symbol: option.markerShapeOfQC },
+          visible: option.highlightQC,
+          line: { width: 1 },
+          hoverinfo: 'none',
+          type: 'qc'
+        }
+        qcTraces.push(qcTrace)
       }
+      this.landmarkPeakAreaData.push(...qcTraces)
       this.monitorTask.serialNumber = Math.floor(Math.random() * (10000 - 1)) + 1
     },
     refreshData (data, options) {
       for (var i = 0; i < data.length; i++) {
-        data[i].line.width = options.lineWidth
-        var markerSize = []
-        var markerSymbol = []
-        var symbolColor = []
-        for (var j = 0; j < data[i].sampleName.length; j++) {
-          if (data[i].sampleName[j].indexOf('QC') !== -1) {
-            markerSize.push(options.markerSizeOfQC)
-            markerSymbol.push(options.markerShapeOfQC)
-          } else {
-            markerSize.push(options.markerSizeOfBlank)
-            markerSymbol.push(options.markerShapeOfBlank)
-          }
-          if (options.markerColorOfQC !== '') {
-            if (data[i].sampleName[j].indexOf('QC') !== -1) {
-              symbolColor.push(options.markerColorOfQC)
-            } else {
-              if (options.markerColorOfBlank !== '') {
-                symbolColor.push(options.markerColorOfBlank)
-              } else {
-                symbolColor.push('rgba(0, 0, 0, 0)')
-              }
-            }
-          }
-        }
-        data[i].marker.size = markerSize
-        data[i].marker.symbol = markerSymbol
-        if (symbolColor.length > 0) {
-          data[i].marker.color = symbolColor
+        const type = data[i].type
+        if (type === 'qc') {
+          data[i].visible = options.highlightQC
+          data[i].mode = options.connectQCAsLine ? 'markers+lines' : 'markers'
+          data[i].marker.size = options.markerSizeOfQC
+          data[i].marker.symbol = options.markerShapeOfQC
+        } else {
+          data[i].line.width = options.lineWidth
+          data[i].marker.size = options.markerSizeOfBlank
+          data[i].marker.symbol = options.markerShapeOfBlank
         }
       }
     },
     isQC (name) {
-      if (name.indexOf('QC') === -1 && name.indexOf('qc') === -1) {
+      const qcSymbol = this.sampleTypeAssignmentForm.keywordQC
+      if (name.indexOf(qcSymbol.toUpperCase()) === -1 && name.indexOf(qcSymbol.toLowerCase()) === -1) {
         return false
       } else {
         return true
@@ -1957,12 +1987,7 @@ export default {
       if (name.startsWith('All')) {
         this.selectedLandmarkRtData = this.landmarkRtData
       } else {
-        for (var i = 0; i < this.landmarkRtData.length; i++) {
-          if (this.landmarkRtData[i].name === name) {
-            this.selectedLandmarkRtData = [this.landmarkRtData[i]]
-            break
-          }
-        }
+        this.selectedLandmarkRtData = this.landmarkRtData.filter(v => v.name === name)
       }
       this.renderWLQL(this.selectedLandmarkRtData, 'landmarkRt', this.panelOptions.landmarkRt)
     },
@@ -1976,12 +2001,7 @@ export default {
       if (name.startsWith('All')) {
         this.selectedLandmarkIntensityData = this.landmarkIntensityData
       } else {
-        for (var i = 0; i < this.landmarkIntensityData.length; i++) {
-          if (this.landmarkIntensityData[i].name === name) {
-            this.selectedLandmarkIntensityData = [this.landmarkIntensityData[i]]
-            break
-          }
-        }
+        this.selectedLandmarkIntensityData = this.landmarkIntensityData.filter(v => v.name === name)
       }
       this.renderWLQL(this.selectedLandmarkIntensityData, 'landmarkIntensity', this.panelOptions.landmarkIntensity)
     },
@@ -1995,12 +2015,7 @@ export default {
       if (name.startsWith('All')) {
         this.selectedLandmarkRelMzErrorData = this.landmarkRelMzErrorData
       } else {
-        for (var i = 0; i < this.landmarkRelMzErrorData.length; i++) {
-          if (this.landmarkRelMzErrorData[i].name === name) {
-            this.selectedLandmarkRelMzErrorData = [this.landmarkRelMzErrorData[i]]
-            break
-          }
-        }
+        this.selectedLandmarkRelMzErrorData = this.landmarkRelMzErrorData.filter(v => v.name === name)
       }
       this.renderWLQL(this.selectedLandmarkRelMzErrorData, 'landmarkRelMzError', this.panelOptions.landmarkRelMzError)
     },
@@ -2014,12 +2029,7 @@ export default {
       if (name.startsWith('All')) {
         this.selectedLandmarkAbsMzErrorData = this.landmarkAbsMzErrorData
       } else {
-        for (var i = 0; i < this.landmarkAbsMzErrorData.length; i++) {
-          if (this.landmarkAbsMzErrorData[i].name === name) {
-            this.selectedLandmarkAbsMzErrorData = [this.landmarkAbsMzErrorData[i]]
-            break
-          }
-        }
+        this.selectedLandmarkAbsMzErrorData = this.landmarkAbsMzErrorData.filter(v => v.name === name)
       }
       this.renderWLQL(this.selectedLandmarkAbsMzErrorData, 'landmarkAbsMzError', this.panelOptions.landmarkAbsMzError)
     },
@@ -2033,12 +2043,7 @@ export default {
       if (name.startsWith('All')) {
         this.selectedLandmarkPeakAreaData = this.landmarkPeakAreaData
       } else {
-        for (var i = 0; i < this.landmarkPeakAreaData.length; i++) {
-          if (this.landmarkPeakAreaData[i].name === name) {
-            this.selectedLandmarkPeakAreaData = [this.landmarkPeakAreaData[i]]
-            break
-          }
-        }
+        this.selectedLandmarkPeakAreaData = this.landmarkPeakAreaData.filter(v => v.name === name)
       }
       this.renderWLQL(this.selectedLandmarkPeakAreaData, 'landmarkPeakArea', this.panelOptions.landmarkPeakArea)
     },
@@ -2129,56 +2134,67 @@ export default {
         } else if (this.currentChromatogram.startsWith('Extract Ion Chromatogram')) {
           this.router = { path: 'detail', type: 'extractIonCurrent' }
         }
+        window.scrollTo(0, 0)
       } else if (command === 'viewLandmarkRt') {
         this.router = { path: 'detail', type: 'landmarkRt' }
         this.detailPanelData = this.selectedLandmarkRtData
         this.detailPanelTitle = this.panelTitleOfRT
+        window.scrollTo(0, 0)
       } else if (command === 'viewLandmarkIntensity') {
         this.router = { path: 'detail', type: 'landmarkIntensity' }
         this.detailPanelData = this.selectedLandmarkIntensityData
         this.detailPanelTitle = this.panelTitleOfIntensity
+        window.scrollTo(0, 0)
       } else if (command === 'viewLandmarkRelMzError') {
         this.router = { path: 'detail', type: 'landmarkRelMzError' }
         this.detailPanelData = this.selectedLandmarkRelMzErrorData
         this.detailPanelTitle = this.panelTitleOfRelMzError
+        window.scrollTo(0, 0)
       } else if (command === 'viewLandmarkAbsMzError') {
         this.router = { path: 'detail', type: 'landmarkAbsMzError' }
         this.detailPanelData = this.selectedLandmarkAbsMzErrorData
         this.detailPanelTitle = this.panelTitleOfAbsMzError
+        window.scrollTo(0, 0)
       } else if (command === 'viewLandmarkPeakArea') {
         this.router = { path: 'detail', type: 'landmarkPeakArea' }
         this.detailPanelData = this.selectedLandmarkPeakAreaData
         this.detailPanelTitle = this.panelTitleOfPeakArea
+        window.scrollTo(0, 0)
       } else if (command === 'editLandmarkRt') {
         this.router = { path: 'editor', type: 'landmarkRt' }
         this.editorPanelData = this.selectedLandmarkRtData
         this.editorPanelTitle = this.panelTitleOfRT
         this.editorPanelOptions = this.panelOptions.landmarkRt
         this.renderWLQL(this.editorPanelData, 'landmarkRt', this.editorPanelOptions)
+        window.scrollTo(0, 0)
       } else if (command === 'editLandmarkIntensity') {
         this.router = { path: 'editor', type: 'landmarkIntensity' }
         this.editorPanelData = this.selectedLandmarkIntensityData
         this.editorPanelTitle = this.panelTitleOfIntensity
         this.editorPanelOptions = this.panelOptions.landmarkIntensity
         this.renderWLQL(this.editorPanelData, 'landmarkIntensity', this.editorPanelOptions)
+        window.scrollTo(0, 0)
       } else if (command === 'editLandmarkRelMzError') {
         this.router = { path: 'editor', type: 'landmarkRelMzError' }
         this.editorPanelData = this.selectedLandmarkRelMzErrorData
         this.editorPanelTitle = this.panelTitleOfRelMzError
         this.editorPanelOptions = this.panelOptions.landmarkRelMzError
         this.renderWLQL(this.editorPanelData, 'landmarkRelMzError', this.editorPanelOptions)
+        window.scrollTo(0, 0)
       } else if (command === 'editLandmarkAbsMzError') {
         this.router = { path: 'editor', type: 'landmarkAbsMzError' }
         this.editorPanelData = this.selectedLandmarkAbsMzErrorData
         this.editorPanelTitle = this.panelTitleOfAbsMzError
         this.editorPanelOptions = this.panelOptions.landmarkAbsMzError
         this.renderWLQL(this.editorPanelData, 'landmarkAbsMzError', this.editorPanelOptions)
+        window.scrollTo(0, 0)
       } else if (command === 'editLandmarkPeakArea') {
         this.router = { path: 'editor', type: 'landmarkPeakArea' }
         this.editorPanelData = this.selectedLandmarkPeakAreaData
         this.editorPanelTitle = this.panelTitleOfPeakArea
         this.editorPanelOptions = this.panelOptions.landmarkPeakArea
         this.renderWLQL(this.editorPanelData, 'landmarkPeakArea', this.editorPanelOptions)
+        window.scrollTo(0, 0)
       }
     },
     handleDropdownOfDetailPanel (command) {
@@ -2263,7 +2279,7 @@ export default {
       }
     },
     renderWLQL (data, type, options) {
-      if (data.length === 1) {
+      if (data.length === 2) {
         // show uql/bql/uwl/bwl
         var wlqlShapes = []
         var median = this.median(data[0].y)
@@ -2436,7 +2452,8 @@ export default {
         if (successResp.data.code === 200) {
           const data = successResp.data.data
           self.monitorTask.monitoring = false
-          self.monitorTask.taskId = data.taskId
+          self.project.name = data.projectName
+          self.monitorTask.taskId = data.projectId
           self.monitorTask.monitorPath = data.monitorPath
           self.monitorTask.monitorSamples = data.monitorSamples
           self.loadingMonitorSamples = false
@@ -2709,14 +2726,6 @@ export default {
       this.editorPanelLayout.height = document.body.clientHeight - HEADER_HEIGHT - 10 - 32 - 40
       this.layout.editor.width = 300
       this.layout.editor.height = (document.body.clientHeight - HEADER_HEIGHT - 10 - 32)
-
-      // 动态调整sidebar的高度
-      var self = this
-      setInterval(() => {
-        self.layout.sidebar.height = document.body.scrollHeight
-        document.getElementById('progress').style.height = document.body.scrollHeight - 60 + 'px'
-        document.getElementById('progress').style.maxHeight = document.body.scrollHeight - 60 + 'px'
-      }, 5000)
     }
   }
 }
@@ -3033,6 +3042,11 @@ button.primary-btn.el-button.el-button--primary {
 .monitor-dialog .el-dialog__body {
   max-height: 400px !important;
 }
+
+.flex-center {
+  display: flex;
+  align-items: center;
+}
 </style>
 
 <style scoped>
@@ -3084,13 +3098,13 @@ button.primary-btn.el-button.el-button--primary {
 }
 
 .back-button {
-  padding: 0px;
-  background-color: #f4f5f5;
-  border: none;
+  padding: 0px !important;
+  background-color: #f4f5f5 !important;
+  border: none !important;
 }
 
 .back-button:hover {
-  background-color: #dadcdd;
+  background-color: #dadcdd !important;
 }
 
 .edit-area {
@@ -3106,10 +3120,8 @@ button.primary-btn.el-button.el-button--primary {
 .settings-label {
   font-weight: 500;
   font-size: 12px;
-}
-
-.settings-label:hover {
-  cursor: default;
+  color: rgb(36, 41, 46);
+  padding: 0 8px;
 }
 
 .el-form-subitem-wrapper {
@@ -3121,12 +3133,6 @@ button.primary-btn.el-button.el-button--primary {
   border-radius: 3px;
   display: flex;
   align-items: center;
-}
-
-.el-form-subitem-wrapper:hover {
-  background-color: rgba(247, 247, 247);
-  box-shadow: rgba(24, 26, 27, 0.2) 0px 1px 2px;
-  cursor: default;
 }
 
 .radio-hidden {

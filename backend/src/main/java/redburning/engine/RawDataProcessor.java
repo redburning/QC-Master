@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,10 +50,22 @@ public class RawDataProcessor implements FileObserver {
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
 		mzXmlDataParser.setTaskId(taskId);
+		initSampleList();
 	}
 	
 	public void setEmitter(SseEmitter emitter) {
 		mzXmlDataParser.setEmitter(emitter);
+	}	
+	
+	public void initSampleList() {
+		MonitorFilesEntity monitorFilesEntity = monitorFilesService.getEntity(taskId);
+		if (monitorFilesEntity != null) {
+			List<String> monitorFileList = new ArrayList<>(monitorFilesEntity.getFiles());
+			List<String> sampleList = monitorFileList.stream()
+					.map(e -> e.substring(e.lastIndexOf(File.separator) + 1, e.length() - 4))
+					.collect(Collectors.toList());
+			mzXmlDataParser.setSampleList(sampleList);
+		}
 	}
 	
 	@Override
