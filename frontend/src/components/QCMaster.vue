@@ -994,11 +994,12 @@ export default {
       },
       ionCurrentLayout: {
         showlegend: false,
+        hovermode: 'closest',
         margin: { t: 40, b: 50, l: 70, r: 40 },
         xaxis: {
           title: { text: 'RT(min)', standoff: 2 }
         },
-        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Intensity', standoff: 2 }, fixedrange: true },
+        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Intensity', standoff: 2 } },
         width: null,
         height: null
       },
@@ -1006,7 +1007,7 @@ export default {
         showlegend: false,
         margin: { t: 40, b: 50, l: 70, r: 40 },
         xaxis: { title: { text: 'Injection Sequence', standoff: 2 } },
-        yaxis: { exponentformat: 'E', showline: true, title: { text: 'RT(min)', standoff: 2 }, fixedrange: true },
+        yaxis: { exponentformat: 'E', showline: true, title: { text: 'RT(min)', standoff: 2 } },
         width: null,
         height: null,
         shapes: []
@@ -1015,7 +1016,7 @@ export default {
         showlegend: false,
         margin: { t: 40, b: 50, l: 70, r: 40 },
         xaxis: { title: { text: 'Injection Sequence', standoff: 2 } },
-        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Intensity', standoff: 2 }, fixedrange: true },
+        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Intensity', standoff: 2 } },
         width: null,
         height: null,
         shapes: []
@@ -1024,7 +1025,7 @@ export default {
         showlegend: false,
         margin: { t: 40, b: 50, l: 70, r: 40 },
         xaxis: { title: { text: 'Injection Sequence', standoff: 2 } },
-        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Relative Error(ppm)', standoff: 2 }, fixedrange: true },
+        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Relative Error(ppm)', standoff: 2 } },
         width: null,
         height: null,
         shapes: []
@@ -1033,7 +1034,7 @@ export default {
         showlegend: false,
         margin: { t: 40, b: 50, l: 70, r: 40 },
         xaxis: { title: { text: 'Injection Sequence', standoff: 2 } },
-        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Absolute Error(mDa)', standoff: 2 }, fixedrange: true },
+        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Absolute Error(mDa)', standoff: 2 } },
         width: null,
         height: null,
         shapes: []
@@ -1042,7 +1043,7 @@ export default {
         showlegend: false,
         margin: { t: 40, b: 50, l: 75, r: 40 },
         xaxis: { title: { text: 'Injection Sequence', standoff: 2 } },
-        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Peak Area', standoff: 2 }, fixedrange: true },
+        yaxis: { exponentformat: 'E', showline: true, title: { text: 'Peak Area', standoff: 2 } },
         width: null,
         height: null,
         shapes: []
