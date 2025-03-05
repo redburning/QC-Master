@@ -8,12 +8,14 @@
         <ul style="list-style-type:none; padding-left:5px; margin-top: 0px;">
           <li v-for="(sample, index) in monitorTask.monitorSamples" :key="sample" style="display: flex;"
             :class="{ 'sample-list-item': !isQC(sample), 'sample-list-item-qc': isQC(sample) }">
-            <el-button style="border: none; background-color: rgba(0,0,0,0); color: white; padding: 0px; font-size: 13px; cursor: pointer; display: flex; width: 100%; align-items: center;" @click="onSelectedSample(sample)" @dblclick.native="onDBClickSample(sample)">
-              <svg t="1694444178129" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13049" width="12" height="12">
-                <path d="M567.168 115.498667l34.901333 34.901333L141.568 610.901333C105.301333 647.168 85.333333 695.381333 85.333333 746.666667s19.968 99.498667 56.234667 135.808C177.877333 918.698667 226.090667 938.666667 277.333333 938.666667s99.456-19.968 135.765334-56.234667L873.6 421.930667l34.901333 34.901333 60.330667-60.330667-341.333333-341.333333-60.330667 60.330667z m135.765333 356.437333l-102.528-102.570667-60.330666 60.330667 102.528 102.570667-60.330667 60.373333-42.24-42.24-60.330667 60.330667 42.24 42.24-60.373333 60.373333-102.528-102.570667L298.666667 671.061333l102.528 102.570667-48.469334 48.469333c-40.32 40.277333-110.506667 40.277333-150.826666 0C181.76 801.92 170.666667 775.168 170.666667 746.666667s11.093333-55.253333 31.232-75.434667L662.4 210.730667l150.826667 150.826666-110.293334 110.378667z" p-id="13050" fill="white"></path>
-              </svg>
-              {{ index + 1 + ': ' + sample }}
-            </el-button>
+            <el-tooltip class="item" effect="dark" :content="sample" placement="right">
+              <el-button style="border: none; background-color: rgba(0,0,0,0); color: white; padding: 0px; font-size: 13px; cursor: pointer; display: flex; width: 100%; align-items: center;" @click="onSelectedSample(sample)" @dblclick.native="onDBClickSample(sample)">
+                <svg t="1694444178129" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13049" width="12" height="12">
+                  <path d="M567.168 115.498667l34.901333 34.901333L141.568 610.901333C105.301333 647.168 85.333333 695.381333 85.333333 746.666667s19.968 99.498667 56.234667 135.808C177.877333 918.698667 226.090667 938.666667 277.333333 938.666667s99.456-19.968 135.765334-56.234667L873.6 421.930667l34.901333 34.901333 60.330667-60.330667-341.333333-341.333333-60.330667 60.330667z m135.765333 356.437333l-102.528-102.570667-60.330666 60.330667 102.528 102.570667-60.330667 60.373333-42.24-42.24-60.330667 60.330667 42.24 42.24-60.373333 60.373333-102.528-102.570667L298.666667 671.061333l102.528 102.570667-48.469334 48.469333c-40.32 40.277333-110.506667 40.277333-150.826666 0C181.76 801.92 170.666667 775.168 170.666667 746.666667s11.093333-55.253333 31.232-75.434667L662.4 210.730667l150.826667 150.826666-110.293334 110.378667z" p-id="13050" fill="white"></path>
+                </svg>
+                {{ index + 1 + ': ' + sample }}
+              </el-button>
+            </el-tooltip>
           </li>
         </ul>
       </div>

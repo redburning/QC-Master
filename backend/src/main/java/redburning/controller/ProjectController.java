@@ -61,10 +61,12 @@ public class ProjectController {
 			for (ProjectEntity project : projectList) {
 				String id = project.getId();
 				MonitorFilesEntity monitorFilesEntity = monitorFilesService.getEntity(id);
-				int sampleNumber = monitorFilesEntity.getFiles().size();
-				ProjectVo projectVo = new ProjectVo(project);
-				projectVo.setSampleNumber(sampleNumber);
-				projectVoList.add(projectVo);
+				if (monitorFilesEntity != null) {
+					int sampleNumber = monitorFilesEntity.getFiles().size();
+					ProjectVo projectVo = new ProjectVo(project);
+					projectVo.setSampleNumber(sampleNumber);
+					projectVoList.add(projectVo);
+				}
 			}
 			return Result.success(projectVoList);
 		} catch (Exception e) {

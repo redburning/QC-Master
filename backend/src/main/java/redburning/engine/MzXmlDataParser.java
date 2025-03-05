@@ -92,7 +92,7 @@ public class MzXmlDataParser {
 		}
 		source.close();
 		
-		DataSampling.layerSampling(rtTrace, basePeakIntensityTrace);
+		DataSampling.lttbSampling(rtTrace, basePeakIntensityTrace, 800);
 		
 		String sampleName = filePath.substring(filePath.lastIndexOf(File.separator) + 1, filePath.length() - 6);
 		BPCEntity bpcEntity = new BPCEntity(taskId, 
@@ -119,7 +119,7 @@ public class MzXmlDataParser {
 		}
 		source.close();
 		
-		DataSampling.layerSampling(rtTrace, totalIonCurrentTrace);
+		DataSampling.lttbSampling(rtTrace, totalIonCurrentTrace, 800);
 		
 		String sampleName = filePath.substring(filePath.lastIndexOf(File.separator) + 1, filePath.length() - 6);		
 		TICEntity ticEntity = new TICEntity(taskId,
