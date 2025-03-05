@@ -21,6 +21,7 @@ import redburning.Application;
 import redburning.dto.Landmark;
 import redburning.entity.MonitorFilesEntity;
 import redburning.service.MonitorFilesService;
+import redburning.util.FileUtil;
 import umich.ms.fileio.exceptions.FileParsingException;
 
 @Component
@@ -33,7 +34,7 @@ public class RawDataProcessor implements FileObserver {
 	
 	private static final String resultPath = Application.home() + File.separator + "output" + File.separator;
 	
-	private static final int maxRetries = 10;
+	private static final int maxRetries = 20;
 	
 	private String taskId;
 	
@@ -89,13 +90,13 @@ public class RawDataProcessor implements FileObserver {
 			for (int i = 0; i < maxRetries; i++) {
 				try {
 					BasicFileAttributes attributes = Files.readAttributes(rawDataPath, BasicFileAttributes.class);
-					long creationTime = attributes.creationTime().toMillis();
-					long lifeTime = System.currentTimeMillis() - creationTime;
+					long modifiedTime = attributes.lastModifiedTime().toMillis();
+					long lifeTime = System.currentTimeMillis() - modifiedTime;
 					// 只处理生成超过15min的文件, 因为raw data从开始写入到写入完成大约要持续15min
 					// 不完整的raw data是无法完成转换的
 					long minLifeTime = 15 * 60 * 1000;
 					if (lifeTime < minLifeTime) {
-						logger.info("found newly file {}, wait for {}s to convert it.", rawDataPath.getFileName(), (minLifeTime - lifeTime) / 60);
+						logger.info("found newly file {}, wait for {}s to convert it.", rawDataPath.getFileName(), (minLifeTime - lifeTime) / 1000);
 						Thread.sleep(minLifeTime - lifeTime);
 					}
 					
@@ -146,6 +147,8 @@ public class RawDataProcessor implements FileObserver {
 		mzXmlDataParser.parseTotalIonCurrent(filePath);
 		mzXmlDataParser.parseExtractIonCurrent(filePath);
 		mzXmlDataParser.extractLandmarks(filePath);
+		// clean mzXML file
+		FileUtil.removeFile(filePath);
 	}
 	
 }

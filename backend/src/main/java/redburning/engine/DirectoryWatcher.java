@@ -50,9 +50,7 @@ public class DirectoryWatcher {
     public void startWatching() {
     	try {
     		this.watchService = FileSystems.getDefault().newWatchService();
-            this.targetDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
-                                       StandardWatchEventKinds.ENTRY_DELETE,
-                                       StandardWatchEventKinds.ENTRY_MODIFY);
+            this.targetDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
             this.isMonitoring = true;
             
             this.executorService = Executors.newSingleThreadExecutor();
@@ -79,7 +77,9 @@ public class DirectoryWatcher {
                             
                             // 获取文件名
                             Path fileName = (Path) event.context();
-                            notifyObservers(fileName);
+                            if (isTargetFormat(fileName)) {
+                            	notifyObservers(Paths.get(targetDir + File.separator + fileName.getFileName().toString()));
+                            }
                         }
                         // 重置 WatchKey
                         boolean valid = key.reset();

@@ -18,7 +18,7 @@ public class FileUtil {
 	public static boolean removeFile(String path) {
 		File file = new File(path);
 		validateFile(file);
-		if (file.exists()&&file.isFile()) {
+		if (file.exists() && file.isFile()) {
 			if (file.delete()) {
 				return true;
 			}
